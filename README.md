@@ -1,2 +1,2 @@
-# chinese-chess-go
-chinese chess go
+# chinese-chess-table-go
+chinese chess table go
