@@ -67,9 +67,20 @@ func (c *ChessBoard) ClearChess(x, y int) {
 	c[x][y] = nil
 }
 
-func (c *ChessBoard) DoAction(action Action, src, dst *Chess) {
-	c.SetChess(action.Dst.X, action.Dst.Y, src)
+func (c *ChessBoard) DoAction(action Action) (ok bool) {
+
+	ok = c.CheckAction(action)
+	if !ok {
+		return
+	}
+
+	srcChess := c.GetChessBYPoint(action.Src)
+	//dstChess := c.GetChessBYPoint(action.Dst)
+
+	c.SetChess(action.Dst.X, action.Dst.Y, srcChess)
 	c.ClearChess(action.Src.X, action.Src.Y)
+
+	return
 }
 
 func (c *ChessBoard) CheckAction(action Action) (ok bool) {
@@ -380,4 +391,94 @@ func (c *ChessBoard) CheckBingAction(action Action, srcChess, dstChess *Chess) b
 	}
 
 	return true
+}
+
+func (c *ChessBoard) CheckJiangJun(color int) {
+	// 检查将军
+
+	if color == COLOR_RED {
+		c.CheckJiangJunRed()
+	} else {
+		c.CheckJiangJunBlack()
+	}
+
+}
+
+func (c *ChessBoard) GetRedShuaiPoint() (shuaiPoint *Point) {
+
+	for i := 3; i <= 5; i++ {
+		for j := 0; j <= 2; j++ {
+			chess := c.GetChess(i, j)
+			if chess != nil && chess.cType == CHESS_SHUAI {
+				return NewPoint(i, j)
+			}
+		}
+	}
+
+	return &Point{}
+}
+
+func (c *ChessBoard) CheckJiangJunRed() (ok bool) {
+	// 检查目前的位置，是否有对方的棋可以直接杀自己的帅
+
+	//
+
+	shuaiPoint := c.GetRedShuaiPoint()
+
+	// 检查别人的車
+	// 从帅的位置出发，往四个方向查找，看有没有别人的車
+
+	y := shuaiPoint.Y
+	for x := shuaiPoint.X; x <= 9; x++ {
+		chess := c.GetChess(x, y)
+		if chess != nil && !chess.IsNone() {
+			if chess.Color() != COLOR_RED && chess.cType == CHESS_JU {
+				return true
+			} else {
+				break
+			}
+		}
+	}
+
+	for x := shuaiPoint.X; x >= 0; x-- {
+		chess := c.GetChess(x, y)
+		if chess != nil && !chess.IsNone() {
+			if chess.Color() != COLOR_RED && chess.cType == CHESS_JU {
+				return true
+			} else {
+				break
+			}
+		}
+	}
+
+	x := shuaiPoint.X
+	for y := shuaiPoint.Y; y <= 9; y++ {
+		chess := c.GetChess(x, y)
+		if chess != nil && !chess.IsNone() {
+			if chess.Color() != COLOR_RED && chess.cType == CHESS_JU {
+				return true
+			} else {
+				break
+			}
+		}
+	}
+
+	for y := shuaiPoint.Y; y >= 0; y-- {
+		chess := c.GetChess(x, y)
+		if chess != nil && !chess.IsNone() {
+			if chess.Color() != COLOR_RED && chess.cType == CHESS_JU {
+				return true
+			} else {
+				break
+			}
+		}
+	}
+
+	// 检查别人的马
+	// 先找到8个位置，看8个位置哪个有马，再看这个马是否有被蹩马腿
+
+}
+
+func (c *ChessBoard) CheckJiangJunBlack() {
+
 }
