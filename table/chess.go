@@ -31,7 +31,3 @@ func (c *Chess) IsNone() bool {
 func (c *Chess) Color() int {
 	return c.color
 }
-
-func (c *Chess) DoAction() bool {
-
-}
