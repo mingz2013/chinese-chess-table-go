@@ -156,14 +156,61 @@ func (c *ChessBoard) CheckJuAction(action Action, srcChess, dstChess *Chess) boo
 }
 
 func (c *ChessBoard) CheckMaAction(action Action, srcChess, dstChess *Chess) bool {
+
+	// 马走日，
+
+	// 别马脚
+
+	if Abs(action.Src.X-action.Dst.X) == 1 {
+		if Abs(action.Src.Y-action.Dst.Y) != 2 {
+			return false
+		}
+	} else if Abs(action.Src.X-action.Dst.Y) == 2 {
+		if Abs(action.Src.Y-action.Dst.Y) != 1 {
+			return false
+		}
+	} else {
+		return false
+	}
+
+	var maJiaoPoint *Point
+	if Abs(action.Src.X-action.Dst.X) == 1 {
+		maJiaoPoint = NewPoint(action.Src.X, (action.Src.Y-action.Dst.Y)/2+action.Src.Y)
+
+	} else {
+		maJiaoPoint = NewPoint((action.Src.X-action.Dst.X)/2+action.Src.X, action.Src.Y)
+	}
+
+	if !c.GetChessBYPoint(*maJiaoPoint).IsNone() {
+		return false
+	}
+
 	return false
 }
 
 func (c *ChessBoard) CheckXiangAction(action Action, srcChess, dstChess *Chess) bool {
+	// 象走田
+	// 别象眼
+
+	if Abs(action.Src.X-action.Dst.X) != 2 || Abs(action.Src.Y-action.Dst.Y) != 2 {
+		return false
+	}
+
+	xiangYanPoint := NewPoint((action.Src.X-action.Dst.X)/2+action.Src.X, (action.Src.Y-action.Dst.Y)/2+action.Src.Y)
+	if !c.GetChessBYPoint(*xiangYanPoint).IsNone() {
+		return false
+	}
+
 	return false
 }
 
 func (c *ChessBoard) CheckShiAction(action Action, srcChess, dstChess *Chess) bool {
+
+	// 士，过河之前，过河之后，
+	// 过河之前只能向前，过河之后可以向前和平移
+
+	//
+
 	return false
 }
 
