@@ -51,7 +51,7 @@ func (c *ChessBoard) GetInfo() {
 
 }
 
-func (c *ChessBoard) GetChessBYPoint(point Point) *Chess {
+func (c *ChessBoard) GetChessBYPoint(point *Point) *Chess {
 	return c.GetChess(point.X, point.Y)
 }
 
@@ -67,7 +67,7 @@ func (c *ChessBoard) ClearChess(x, y int) {
 	c[x][y] = nil
 }
 
-func (c *ChessBoard) DoAction(action Action) (ok bool) {
+func (c *ChessBoard) DoAction(action *Action) (ok bool) {
 
 	ok = c.CheckAction(action)
 	if !ok {
@@ -83,7 +83,7 @@ func (c *ChessBoard) DoAction(action Action) (ok bool) {
 	return
 }
 
-func (c *ChessBoard) CheckAction(action Action) (ok bool) {
+func (c *ChessBoard) CheckAction(action *Action) (ok bool) {
 	srcChess := c.GetChessBYPoint(action.Src)
 	dstChess := c.GetChessBYPoint(action.Dst)
 
@@ -115,7 +115,7 @@ func (c *ChessBoard) CheckAction(action Action) (ok bool) {
 	return
 }
 
-func (c *ChessBoard) CheckActionSameColor(action Action, srcChess, dstChess *Chess) bool {
+func (c *ChessBoard) CheckActionSameColor(action *Action, srcChess, dstChess *Chess) bool {
 	// 相同颜色的不能互相吃
 	if srcChess.Color() == dstChess.Color() {
 		return false
@@ -123,7 +123,7 @@ func (c *ChessBoard) CheckActionSameColor(action Action, srcChess, dstChess *Che
 	return true
 }
 
-func (c *ChessBoard) CheckJuAction(action Action, srcChess, dstChess *Chess) bool {
+func (c *ChessBoard) CheckJuAction(action *Action, srcChess, dstChess *Chess) bool {
 	// 检查路径，是否满足路线规则
 
 	// 在一条直线上，
@@ -168,7 +168,7 @@ func (c *ChessBoard) CheckJuAction(action Action, srcChess, dstChess *Chess) boo
 
 }
 
-func (c *ChessBoard) CheckMaAction(action Action, srcChess, dstChess *Chess) bool {
+func (c *ChessBoard) CheckMaAction(action *Action, srcChess, dstChess *Chess) bool {
 
 	// 马走日，
 
@@ -194,14 +194,14 @@ func (c *ChessBoard) CheckMaAction(action Action, srcChess, dstChess *Chess) boo
 		maJiaoPoint = NewPoint((action.Src.X-action.Dst.X)/2+action.Src.X, action.Src.Y)
 	}
 
-	if !c.GetChessBYPoint(*maJiaoPoint).IsNone() {
+	if !c.GetChessBYPoint(maJiaoPoint).IsNone() {
 		return false
 	}
 
 	return false
 }
 
-func (c *ChessBoard) CheckXiangAction(action Action, srcChess, dstChess *Chess) bool {
+func (c *ChessBoard) CheckXiangAction(action *Action, srcChess, dstChess *Chess) bool {
 	// 象走田
 	// 别象眼
 
@@ -210,14 +210,14 @@ func (c *ChessBoard) CheckXiangAction(action Action, srcChess, dstChess *Chess) 
 	}
 
 	xiangYanPoint := NewPoint((action.Src.X-action.Dst.X)/2+action.Src.X, (action.Src.Y-action.Dst.Y)/2+action.Src.Y)
-	if !c.GetChessBYPoint(*xiangYanPoint).IsNone() {
+	if !c.GetChessBYPoint(xiangYanPoint).IsNone() {
 		return false
 	}
 
 	return false
 }
 
-func (c *ChessBoard) CheckShiAction(action Action, srcChess, dstChess *Chess) bool {
+func (c *ChessBoard) CheckShiAction(action *Action, srcChess, dstChess *Chess) bool {
 	//士，
 	// 只能斜着走
 	// 只能在九宫格
@@ -247,7 +247,7 @@ func (c *ChessBoard) CheckShiAction(action Action, srcChess, dstChess *Chess) bo
 	return true
 }
 
-func (c *ChessBoard) CheckShuaiAction(action Action, srcChess, dstChess *Chess) bool {
+func (c *ChessBoard) CheckShuaiAction(action *Action, srcChess, dstChess *Chess) bool {
 
 	// 帅，只能在九宫格
 
@@ -281,7 +281,7 @@ func (c *ChessBoard) CheckShuaiAction(action Action, srcChess, dstChess *Chess) 
 	return true
 }
 
-func (c *ChessBoard) CheckPaoAction(action Action, srcChess, dstChess *Chess) bool {
+func (c *ChessBoard) CheckPaoAction(action *Action, srcChess, dstChess *Chess) bool {
 
 	// 炮
 	// 横竖移动多个位置，
@@ -346,7 +346,7 @@ func (c *ChessBoard) CheckPaoAction(action Action, srcChess, dstChess *Chess) bo
 	return true
 }
 
-func (c *ChessBoard) CheckBingAction(action Action, srcChess, dstChess *Chess) bool {
+func (c *ChessBoard) CheckBingAction(action *Action, srcChess, dstChess *Chess) bool {
 	// 兵，过河之前，过河之后，
 	// 过河之前只能向前，过河之后可以向前和平移
 
@@ -393,15 +393,32 @@ func (c *ChessBoard) CheckBingAction(action Action, srcChess, dstChess *Chess) b
 	return true
 }
 
-func (c *ChessBoard) CheckJiangJun(color int) {
+func (c *ChessBoard) CheckJiangJun(color int) (ok bool) {
 	// 检查将军
 
+	var shuaiPoint *Point
 	if color == COLOR_RED {
-		c.CheckJiangJunRed()
+		shuaiPoint = c.GetRedShuaiPoint()
 	} else {
-		c.CheckJiangJunBlack()
+		shuaiPoint = c.GetBlackShuaiPoint()
 	}
 
+	// 直接遍历对方所有的棋，看哪个棋可以doaction到帅的位置
+
+	for x := 0; x < 9; x++ {
+		for y := 0; y < 10; y++ {
+			chess := c.GetChess(x, y)
+			if chess != nil && chess.Color() != color {
+				point := NewPoint(x, y)
+				ok = c.CheckAction(NewAction(point, shuaiPoint))
+				if ok {
+					return true
+				}
+			}
+		}
+	}
+
+	return false
 }
 
 func (c *ChessBoard) GetRedShuaiPoint() (shuaiPoint *Point) {
@@ -415,70 +432,19 @@ func (c *ChessBoard) GetRedShuaiPoint() (shuaiPoint *Point) {
 		}
 	}
 
-	return &Point{}
+	return nil
 }
 
-func (c *ChessBoard) CheckJiangJunRed() (ok bool) {
-	// 检查目前的位置，是否有对方的棋可以直接杀自己的帅
+func (c *ChessBoard) GetBlackShuaiPoint() (shuaiPoint *Point) {
 
-	//
-
-	shuaiPoint := c.GetRedShuaiPoint()
-
-	// 检查别人的車
-	// 从帅的位置出发，往四个方向查找，看有没有别人的車
-
-	y := shuaiPoint.Y
-	for x := shuaiPoint.X; x <= 9; x++ {
-		chess := c.GetChess(x, y)
-		if chess != nil && !chess.IsNone() {
-			if chess.Color() != COLOR_RED && chess.cType == CHESS_JU {
-				return true
-			} else {
-				break
+	for i := 3; i <= 5; i++ {
+		for j := 7; j <= 9; j++ {
+			chess := c.GetChess(i, j)
+			if chess != nil && chess.cType == CHESS_SHUAI {
+				return NewPoint(i, j)
 			}
 		}
 	}
 
-	for x := shuaiPoint.X; x >= 0; x-- {
-		chess := c.GetChess(x, y)
-		if chess != nil && !chess.IsNone() {
-			if chess.Color() != COLOR_RED && chess.cType == CHESS_JU {
-				return true
-			} else {
-				break
-			}
-		}
-	}
-
-	x := shuaiPoint.X
-	for y := shuaiPoint.Y; y <= 9; y++ {
-		chess := c.GetChess(x, y)
-		if chess != nil && !chess.IsNone() {
-			if chess.Color() != COLOR_RED && chess.cType == CHESS_JU {
-				return true
-			} else {
-				break
-			}
-		}
-	}
-
-	for y := shuaiPoint.Y; y >= 0; y-- {
-		chess := c.GetChess(x, y)
-		if chess != nil && !chess.IsNone() {
-			if chess.Color() != COLOR_RED && chess.cType == CHESS_JU {
-				return true
-			} else {
-				break
-			}
-		}
-	}
-
-	// 检查别人的马
-	// 先找到8个位置，看8个位置哪个有马，再看这个马是否有被蹩马腿
-
-}
-
-func (c *ChessBoard) CheckJiangJunBlack() {
-
+	return nil
 }
