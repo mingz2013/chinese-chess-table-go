@@ -1,5 +1,7 @@
 package table
 
+import "log"
+
 // 我方为红方视角，以红方左下侧为原点
 
 type ChessBoard [9][10]*Chess
@@ -205,23 +207,177 @@ func (c *ChessBoard) CheckXiangAction(action Action, srcChess, dstChess *Chess) 
 }
 
 func (c *ChessBoard) CheckShiAction(action Action, srcChess, dstChess *Chess) bool {
+	//士，
+	// 只能斜着走
+	// 只能在九宫格
 
-	// 士，过河之前，过河之后，
-	// 过河之前只能向前，过河之后可以向前和平移
+	if Abs(action.Src.X-action.Dst.X) != 1 || Abs(action.Src.Y-action.Dst.Y) != 1 {
+		return false
+	}
 
-	//
+	// 锁定中间三个坐标
+	if action.Dst.X != 3 && action.Dst.X != 4 && action.Dst.X != 5 {
+		return false
+	}
 
-	return false
+	if srcChess.Color() == COLOR_RED {
+		if action.Dst.Y != 0 && action.Dst.Y != 1 && action.Dst.Y != 2 {
+			return false
+		}
+	} else if srcChess.Color() == COLOR_BLACK {
+		if action.Dst.Y != 7 && action.Dst.Y != 8 && action.Dst.Y != 9 {
+			return false
+		}
+	} else {
+		log.Println("err...")
+		return false
+	}
+
+	return true
 }
 
 func (c *ChessBoard) CheckShuaiAction(action Action, srcChess, dstChess *Chess) bool {
-	return false
+
+	// 帅，只能在九宫格
+
+	// 在一条直线上
+	if action.Src.Y != action.Dst.Y && action.Src.X != action.Dst.X {
+		return false
+	}
+	// 只能移动一位
+	if Abs(action.Src.X-action.Dst.X)+Abs(action.Src.Y-action.Dst.Y) != 1 {
+		return false
+	}
+
+	// 锁定中间三个坐标
+	if action.Dst.X != 3 && action.Dst.X != 4 && action.Dst.X != 5 {
+		return false
+	}
+
+	if srcChess.Color() == COLOR_RED {
+		if action.Dst.Y != 0 && action.Dst.Y != 1 && action.Dst.Y != 2 {
+			return false
+		}
+	} else if srcChess.Color() == COLOR_BLACK {
+		if action.Dst.Y != 7 && action.Dst.Y != 8 && action.Dst.Y != 9 {
+			return false
+		}
+	} else {
+		log.Println("err...")
+		return false
+	}
+
+	return true
 }
 
 func (c *ChessBoard) CheckPaoAction(action Action, srcChess, dstChess *Chess) bool {
-	return false
+
+	// 炮
+	// 横竖移动多个位置，
+	// 可以跳过一个打对方一个
+
+	// 一条直线上
+	if action.Src.Y != action.Dst.Y && action.Src.X != action.Dst.X {
+		return false
+	}
+
+	// 检查中间有几个位置有子
+
+	centerCount := 0
+
+	if action.Src.Y == action.Dst.Y {
+		tmp := 1
+		if action.Src.X-action.Dst.X > 0 {
+			tmp = 1
+		} else {
+			tmp = -1
+		}
+
+		for i := action.Src.X + tmp; i < action.Dst.X; i += tmp {
+			if !c.GetChess(i, action.Src.Y).IsNone() {
+				centerCount += 1
+				if centerCount > 1 {
+					return false
+				}
+
+			}
+
+		}
+	} else if action.Src.X == action.Dst.X {
+		tmp := 1
+		if action.Src.Y-action.Dst.Y > 0 {
+			tmp = 1
+		} else {
+			tmp = -1
+		}
+
+		for i := action.Src.Y + tmp; i < action.Dst.Y; i += tmp {
+			if !c.GetChess(action.Src.X, i).IsNone() {
+				centerCount += 1
+				if centerCount > 1 {
+					return false
+				}
+			}
+
+		}
+	}
+
+	if centerCount == 1 {
+		if dstChess == nil || dstChess.IsNone() {
+			return false
+		}
+	} else if centerCount == 0 {
+		if dstChess != nil && !dstChess.IsNone() {
+			return false
+		}
+	}
+
+	return true
 }
 
 func (c *ChessBoard) CheckBingAction(action Action, srcChess, dstChess *Chess) bool {
-	return false
+	// 兵，过河之前，过河之后，
+	// 过河之前只能向前，过河之后可以向前和平移
+
+	// 在一条直线上
+	if action.Src.Y != action.Dst.Y && action.Src.X != action.Dst.X {
+		return false
+	}
+	// 只能移动一位
+	if Abs(action.Src.X-action.Dst.X)+Abs(action.Src.Y-action.Dst.Y) != 1 {
+		return false
+	}
+
+	if srcChess.Color() == COLOR_RED {
+		if action.Src.Y <= 4 {
+			// 未过河的红色小卒
+
+			if action.Src.X != action.Dst.X || action.Src.Y+1 != action.Dst.Y {
+				return false
+			}
+
+		} else {
+			// 过河的卒子
+
+			if action.Src.Y > action.Dst.Y {
+				return false
+			}
+
+		}
+	} else if srcChess.Color() == COLOR_BLACK {
+		if action.Src.Y >= 5 {
+			if action.Src.X != action.Dst.X || action.Src.Y-1 != action.Dst.Y {
+				return false
+			}
+		} else {
+			if action.Src.Y < action.Dst.Y {
+				return false
+			}
+		}
+	} else {
+		log.Println("err..")
+		return false
+	}
+
+	return true
 }
