@@ -6,6 +6,12 @@ import "log"
 
 type ChessBoard [9][10]*Chess
 
+func NewChessBoard() *ChessBoard {
+	c := &ChessBoard{}
+	c.Init()
+	return c
+}
+
 func (c *ChessBoard) Init() {
 	c[0][0] = NewChess(CHESS_JU, COLOR_RED)
 	c[1][0] = NewChess(CHESS_MA, COLOR_RED)
@@ -48,7 +54,6 @@ func (c *ChessBoard) Init() {
 }
 
 func (c *ChessBoard) GetInfo() {
-
 }
 
 func (c *ChessBoard) GetChessBYPoint(point *Point) *Chess {
@@ -84,6 +89,8 @@ func (c *ChessBoard) DoAction(action *Action) (ok bool) {
 }
 
 func (c *ChessBoard) CheckAction(action *Action) (ok bool) {
+	// 检查规则，action是否可以正确执行
+
 	srcChess := c.GetChessBYPoint(action.Src)
 	dstChess := c.GetChessBYPoint(action.Dst)
 
@@ -447,4 +454,8 @@ func (c *ChessBoard) GetBlackShuaiPoint() (shuaiPoint *Point) {
 	}
 
 	return nil
+}
+
+func (c *ChessBoard) CheckWin() {
+	// 检查输赢
 }

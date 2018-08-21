@@ -2,7 +2,6 @@ package table
 
 import (
 	"github.com/mingz2013/chinese-chess-table-go/msg"
-	"github.com/mingz2013/chinese-chess-table-go/player"
 	"log"
 	"time"
 )
@@ -13,7 +12,9 @@ type Table struct {
 	MsgIn  <-chan msg.Msg
 	MsgOut chan<- msg.Msg
 
-	PlayersManager
+	TablePlayers
+
+	*ChessBoard
 }
 
 func NewTable(id int, msgIn <-chan msg.Msg, msgOut chan<- msg.Msg) Table {
@@ -23,10 +24,8 @@ func NewTable(id int, msgIn <-chan msg.Msg, msgOut chan<- msg.Msg) Table {
 }
 
 func (t *Table) Init() {
-	for i := 0; i < 4; i++ {
-		t.Players[i] = player.NewPlayer(i)
-	}
-	//t.Play = NewPlay(t)
+	t.TablePlayers.Init()
+	t.ChessBoard = NewChessBoard()
 
 }
 
@@ -55,8 +54,8 @@ func (t *Table) onMsg(m msg.Msg) {
 	switch m.GetCmd() {
 	case "table":
 		t.onTableMsg(m)
-	//case "play":
-	//	t.Play.OnMsg(m)
+	case "play":
+		t.onPlayMsg(m)
 	default:
 		log.Println("unknown cmd", m)
 	}
@@ -70,4 +69,18 @@ func (t *Table) onTableMsg(m msg.Msg) {
 		//t.onTableSit(m)
 	}
 
+}
+
+func (t *Table) onPlayMsg(m msg.Msg) {
+	params := m.GetParams()
+	action := params["action"].(string)
+	switch action {
+	case "move":
+		action_ := &Action{}
+		action_.ParseFromMsg(params)
+		t.ChessBoard.DoAction(action_)
+	default:
+		log.Println("Table.onPlayMsg", "unknown action", action)
+
+	}
 }

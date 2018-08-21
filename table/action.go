@@ -8,3 +8,7 @@ type Action struct {
 func NewAction(src, dst *Point) *Action {
 	return &Action{src, dst}
 }
+
+func (a *Action) ParseFromMsg(params map[string]interface{}) {
+
+}
