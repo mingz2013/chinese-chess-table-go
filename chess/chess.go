@@ -1,4 +1,4 @@
-package table
+package chess
 
 const (
 	CHESS_NONE = iota

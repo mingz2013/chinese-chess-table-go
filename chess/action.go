@@ -1,4 +1,4 @@
-package table
+package chess
 
 type Action struct {
 	Src *Point

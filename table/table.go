@@ -1,6 +1,7 @@
 package table
 
 import (
+	"github.com/mingz2013/chinese-chess-table-go/chess"
 	"github.com/mingz2013/chinese-chess-table-go/msg"
 	"log"
 	"time"
@@ -14,7 +15,7 @@ type Table struct {
 
 	TablePlayers
 
-	*ChessBoard
+	*chess.ChessBoard
 }
 
 func NewTable(id int, msgIn <-chan msg.Msg, msgOut chan<- msg.Msg) Table {
@@ -25,7 +26,7 @@ func NewTable(id int, msgIn <-chan msg.Msg, msgOut chan<- msg.Msg) Table {
 
 func (t *Table) Init() {
 	t.TablePlayers.Init()
-	t.ChessBoard = NewChessBoard()
+	t.ChessBoard = chess.NewChessBoard()
 
 }
 
@@ -76,7 +77,7 @@ func (t *Table) onPlayMsg(m msg.Msg) {
 	action := params["action"].(string)
 	switch action {
 	case "move":
-		action_ := &Action{}
+		action_ := &chess.Action{}
 		action_.ParseFromMsg(params)
 		t.ChessBoard.DoAction(action_)
 	default:

@@ -1,6 +1,7 @@
 package robot
 
 import (
+	"github.com/mingz2013/chinese-chess-table-go/chess"
 	"github.com/mingz2013/chinese-chess-table-go/msg"
 	"log"
 	"time"
@@ -14,10 +15,12 @@ type Robot struct {
 
 	MsgIn  <-chan msg.Msg
 	MsgOut chan<- msg.Msg
+
+	chess.ChessBoard
 }
 
 func (r *Robot) Init() {
-
+	r.ChessBoard.Init()
 }
 
 func NewRobot(id int, name string, msgIn <-chan msg.Msg, msgOut chan<- msg.Msg) Robot {

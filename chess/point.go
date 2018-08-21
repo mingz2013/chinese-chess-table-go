@@ -1,4 +1,4 @@
-package table
+package chess
 
 type Point struct {
 	X int
