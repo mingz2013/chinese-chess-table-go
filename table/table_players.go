@@ -7,7 +7,7 @@ type TablePlayers struct {
 }
 
 func (t *TablePlayers) Init() {
-	for i := 0; i < 4; i++ {
+	for i := 0; i < 2; i++ {
 		t.Players[i] = player.NewPlayer(i)
 	}
 }

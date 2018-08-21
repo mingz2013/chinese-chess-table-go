@@ -79,6 +79,7 @@ func (t *Table) onPlayMsg(m msg.Msg) {
 	case "move":
 		action_ := &chess.Action{}
 		action_.ParseFromMsg(params)
+		// TODO 验证是否有权限doaction，比如，player是否对应相应颜色。当前是否该这个人走了
 		t.ChessBoard.DoAction(action_)
 	default:
 		log.Println("Table.onPlayMsg", "unknown action", action)
