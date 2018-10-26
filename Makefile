@@ -1,5 +1,5 @@
 help:
-	echo "help"
+	@echo "Makefile help"
 
 chinese-chess-table-go:
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build
@@ -17,5 +17,5 @@ run:
 	docker run --net="host" -it mingz2013/chinese-chess-table-go
 
 
-.PYONY: commit-docker, docker-image, chinese-chess-table-go, help
+.PYONY: help, commit-docker, docker-image, chinese-chess-table-go, run
 
