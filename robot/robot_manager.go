@@ -1,8 +1,8 @@
 package robot
 
 import (
-	"github.com/mingz2013/chinese-chess-table-go/base"
-	"github.com/mingz2013/chinese-chess-table-go/msg"
+	"github.com/mingz2013/lib-go/base"
+	"github.com/mingz2013/lib-go/msg"
 	"log"
 	"sync"
 	"time"

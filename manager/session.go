@@ -1,8 +1,8 @@
 package manager
 
 import (
-	"github.com/mingz2013/chinese-chess-table-go/msg"
 	"github.com/mingz2013/chinese-chess-table-go/table"
+	"github.com/mingz2013/lib-go/msg"
 )
 
 type UserSession struct {
