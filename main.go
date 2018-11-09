@@ -30,7 +30,7 @@ import (
 //	return robots
 //}
 
-func main() {
+func StartLocalTest() {
 	//sdk := sdk2.MakerSdk("1")
 
 	//tableManager := table.NewTableManager("1")
@@ -123,4 +123,9 @@ func main() {
 	log.Println("run down")
 
 	wg.Wait()
+}
+
+func main() {
+	StartLocalTest()
+
 }
