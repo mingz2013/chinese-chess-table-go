@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/mingz2013/chinese-chess-table-go/base"
-	"github.com/mingz2013/chinese-chess-table-go/msg"
-	robot2 "github.com/mingz2013/chinese-chess-table-go/robot"
-	table2 "github.com/mingz2013/chinese-chess-table-go/table"
+	"github.com/mingz2013/chinese-chess-table-go/robot"
+	"github.com/mingz2013/chinese-chess-table-go/table"
+	"github.com/mingz2013/lib-go/base"
+	"github.com/mingz2013/lib-go/msg"
 	"log"
 	"sync"
 )
@@ -45,9 +45,9 @@ func main() {
 	tableMsgIn := make(chan msg.Msg)
 	tableMsgOut := make(chan msg.Msg)
 
-	table := table2.NewTable(1, tableMsgIn, tableMsgOut)
+	t := table.NewTable(1, tableMsgIn, tableMsgOut)
 
-	robotManager := robot2.NewRobotManager(tableMsgOut, tableMsgIn)
+	robotManager := robot.NewRobotManager(tableMsgOut, tableMsgIn)
 	//var robots []RobotContext
 
 	//robots := makeRobots()
@@ -113,7 +113,7 @@ func main() {
 
 	log.Println("bound ch down")
 
-	base.RunProcessor(&wg, table)
+	base.RunProcessor(&wg, t)
 	base.RunProcessor(&wg, robotManager)
 	//for i := 0; i < len(robots); i++ {
 	//
