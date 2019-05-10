@@ -2,7 +2,7 @@ package robot
 
 import (
 	"github.com/mingz2013/chinese-chess-table-go/chess"
-	"github.com/mingz2013/lib-go/msg"
+	"github.com/mingz2013/chinese-chess-table-go/msg"
 	"log"
 	"time"
 )
