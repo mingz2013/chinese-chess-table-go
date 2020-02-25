@@ -1,4 +1,4 @@
-package chess
+package chinese_chess_table_go
 
 const (
 	CHESS_NONE = iota

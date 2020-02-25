@@ -1,4 +1,4 @@
-package chess
+package chinese_chess_table_go
 
 type Action struct {
 	Src *Point
@@ -7,8 +7,4 @@ type Action struct {
 
 func NewAction(src, dst *Point) *Action {
 	return &Action{src, dst}
-}
-
-func (a *Action) ParseFromMsg(params map[string]interface{}) {
-
 }
