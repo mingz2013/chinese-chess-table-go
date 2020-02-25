@@ -72,19 +72,63 @@ func (c *chessBoard) clearChess(x, y int) {
 	c[x][y] = nil
 }
 
+func (c *chessBoard) move(action *action) (dstChess *chess) {
+	srcChess := c.getChessBYPoint(action.Src)
+	dstChess = c.getChessBYPoint(action.Dst)
+
+	c.setChess(action.Dst.X, action.Dst.Y, srcChess)
+	c.clearChess(action.Src.X, action.Src.Y)
+
+	return dstChess
+}
+
+func (c *chessBoard) rollbackMove(action *action, dstChess *chess) {
+	srcChess := c.getChessBYPoint(action.Src)
+	dstChess = c.getChessBYPoint(action.Dst)
+
+	c.setChess(action.Src.X, action.Src.Y, srcChess)
+	c.clearChess(action.Dst.X, action.Dst.Y)
+	if dstChess != nil {
+		c.setChess(action.Dst.X, action.Dst.Y, dstChess)
+	}
+}
+
+func (c *chessBoard) testMove(action *action) bool {
+	// 测试走动
+	//dstChess := c.getChessBYPoint(action.Dst)
+	srcChess := c.getChessBYPoint(action.Src)
+
+	dstChess := c.move(action)
+	// 走动后是否被将军
+	isJiang := c.checkJiangJun(srcChess.color)
+
+	c.rollbackMove(action, dstChess)
+
+	return isJiang
+
+}
+
 func (c *chessBoard) DoAction(action *action) (ok bool) {
 
+	// 检查棋子走动是否符合规则
 	ok = c.checkAction(action)
 	if !ok {
 		return
 	}
 
-	srcChess := c.getChessBYPoint(action.Src)
-	//dstChess := c.GetChessBYPoint(action.Dst)
+	// 检查棋子走动后，是否会被将军
+	ok = c.testMove(action)
+	if !ok {
+		return
+	}
 
-	c.setChess(action.Dst.X, action.Dst.Y, srcChess)
-	c.clearChess(action.Src.X, action.Src.Y)
+	// 走动棋子
+	c.move(action)
 
+	// 检查棋子走动后是否将对方
+
+	// 检查棋子走动后是否赢
+	c.checkWin(c.getChessBYPoint(action.Dst).color)
 	return
 }
 
@@ -401,7 +445,7 @@ func (c *chessBoard) checkBingAction(action *action, srcChess, dstChess *chess) 
 }
 
 func (c *chessBoard) checkJiangJun(color int) (ok bool) {
-	// 检查将军
+	// 检查将军, color, 被将军的颜色
 
 	var shuaiPoint *point
 	if color == COLOR_RED {
@@ -456,6 +500,14 @@ func (c *chessBoard) getBlackShuaiPoint() (shuaiPoint *point) {
 	return nil
 }
 
-func (c *chessBoard) checkWin() {
-	// 检查输赢
+func (c *chessBoard) checkWin(color int) bool {
+	// 检查color方是否赢
+	// 检查输赢，我方走了一步，
+	// 最笨的方法，遍历对方可以走动的步骤，然后检查是否仍然将军
+	if !c.checkJiangJun(otherColor(color)) {
+		return false
+	}
+
+	return true
+
 }

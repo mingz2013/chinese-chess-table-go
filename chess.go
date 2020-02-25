@@ -31,3 +31,11 @@ func (c *chess) IsNone() bool {
 func (c *chess) Color() int {
 	return c.color
 }
+
+func otherColor(color int) int {
+	if color == COLOR_BLACK {
+		return COLOR_RED
+	} else if color == COLOR_RED {
+		return COLOR_BLACK
+	}
+}
