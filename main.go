@@ -1,6 +1,6 @@
 package chinese_chess_table_go
 
-func getActionList() (actions []*action) {
+func getActionList() (actions []Action) {
 	return
 }
 

@@ -1,10 +1,10 @@
 package chinese_chess_table_go
 
-type action struct {
-	Src *point
-	Dst *point
+type Action struct {
+	Src Point
+	Dst Point
 }
 
-func NewAction(src, dst *point) *action {
-	return &action{src, dst}
+func NewAction(src, dst Point) Action {
+	return Action{src, dst}
 }
