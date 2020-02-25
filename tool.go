@@ -1,6 +1,6 @@
 package chinese_chess_table_go
 
-func Abs(a uint8) (ret uint8) {
-	ret = (a ^ a>>31) - a>>31
+func Abs(a int8) (ret int8) {
+	ret = (a ^ a>>7) - a>>7
 	return
 }

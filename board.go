@@ -61,7 +61,7 @@ func (c *chessBoard) getChessByPoint(point Point) Chess {
 	return c[point]
 }
 
-func (c *chessBoard) getChess(x, y uint8) Chess {
+func (c *chessBoard) getChess(x, y int8) Chess {
 	return c.getChessByPoint(NewPoint(x, y))
 }
 
@@ -187,7 +187,7 @@ func (c *chessBoard) checkJuAction(action Action, srcChess, dstChess Chess) bool
 	}
 
 	if action.Src.Y() == action.Dst.Y() {
-		var tmp uint8
+		var tmp int8
 		if action.Src.X()-action.Dst.X() > 0 {
 			tmp = 1
 		} else {
@@ -201,7 +201,7 @@ func (c *chessBoard) checkJuAction(action Action, srcChess, dstChess Chess) bool
 
 		}
 	} else if action.Src.X() == action.Dst.X() {
-		var tmp uint8
+		var tmp int8
 		if action.Src.Y()-action.Dst.Y() > 0 {
 			tmp = 1
 		} else {
@@ -349,7 +349,7 @@ func (c *chessBoard) checkPaoAction(action Action, srcChess, dstChess Chess) boo
 	centerCount := 0
 
 	if action.Src.Y() == action.Dst.Y() {
-		var tmp uint8
+		var tmp int8
 		if action.Src.X()-action.Dst.X() > 0 {
 			tmp = 1
 		} else {
@@ -367,7 +367,7 @@ func (c *chessBoard) checkPaoAction(action Action, srcChess, dstChess Chess) boo
 
 		}
 	} else if action.Src.X() == action.Dst.X() {
-		var tmp uint8
+		var tmp int8
 		if action.Src.Y()-action.Dst.Y() > 0 {
 			tmp = 1
 		} else {
@@ -456,7 +456,7 @@ func (c *chessBoard) checkJiangJun(color uint8) (ok bool) {
 	}
 
 	// 直接遍历对方所有的棋，看哪个棋可以doaction到帅的位置
-	var x, y uint8
+	var x, y int8
 	for x = 0; x < 9; x++ {
 		for y = 0; y < 10; y++ {
 			chess := c.getChess(x, y)
@@ -474,7 +474,7 @@ func (c *chessBoard) checkJiangJun(color uint8) (ok bool) {
 }
 
 func (c *chessBoard) getRedShuaiPoint() (shuaiPoint Point) {
-	var x, y uint8
+	var x, y int8
 	for x = 3; x <= 5; x++ {
 		for y = 0; y <= 2; y++ {
 			chess := c.getChess(x, y)
@@ -488,7 +488,7 @@ func (c *chessBoard) getRedShuaiPoint() (shuaiPoint Point) {
 }
 
 func (c *chessBoard) getBlackShuaiPoint() (shuaiPoint Point) {
-	var x, y uint8
+	var x, y int8
 	for x = 3; x <= 5; x++ {
 		for y = 7; y <= 9; y++ {
 			chess := c.getChess(x, y)
@@ -503,7 +503,7 @@ func (c *chessBoard) getBlackShuaiPoint() (shuaiPoint Point) {
 
 func (c *chessBoard) getAllCanActionChess(p Point) (actions []Action) {
 	// 找出chess所有可以移动的action
-	var x, y uint8
+	var x, y int8
 	for x = 0; x < 9; x++ {
 		for y = 0; y < 10; y++ {
 			newPoint := NewPoint(x, y)
@@ -520,7 +520,7 @@ func (c *chessBoard) getAllCanActionChess(p Point) (actions []Action) {
 
 func (c *chessBoard) getAllCanAction(color uint8) (actions []Action) {
 	// 获取color方的所有可以移动的action
-	var x, y uint8
+	var x, y int8
 	for x = 0; x < 9; x++ {
 		for y = 0; y < 10; y++ {
 			chess := c.getChess(x, y)
