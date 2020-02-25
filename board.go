@@ -89,7 +89,7 @@ func (c *chessBoard) rollbackMove(action Action, dstChess Chess) {
 
 	c.setChess(action.Src, srcChess)
 	c.clearChess(action.Dst)
-	if dstChess != 0 {
+	if !dstChess.isNone() {
 		c.setChess(action.Dst, dstChess)
 	}
 }
@@ -386,11 +386,11 @@ func (c *chessBoard) checkPaoAction(action Action, srcChess, dstChess Chess) boo
 	}
 
 	if centerCount == 1 {
-		if dstChess == 0 || dstChess.isNone() {
+		if dstChess.isNone() || dstChess.isNone() {
 			return false
 		}
 	} else if centerCount == 0 {
-		if dstChess != 0 && !dstChess.isNone() {
+		if !dstChess.isNone() && !dstChess.isNone() {
 			return false
 		}
 	}
@@ -460,7 +460,7 @@ func (c *chessBoard) checkJiangJun(color uint8) (ok bool) {
 	for x = 0; x < 9; x++ {
 		for y = 0; y < 10; y++ {
 			chess := c.getChess(x, y)
-			if chess != 0 && chess.color() != color {
+			if !chess.isNone() && chess.color() != color {
 				point := NewPoint(x, y)
 				ok = c.checkAction(NewAction(point, shuaiPoint))
 				if ok {
@@ -478,7 +478,7 @@ func (c *chessBoard) getRedShuaiPoint() (shuaiPoint Point) {
 	for x = 3; x <= 5; x++ {
 		for y = 0; y <= 2; y++ {
 			chess := c.getChess(x, y)
-			if chess != 0 && chess.cType() == CHESS_SHUAI {
+			if !chess.isNone() && chess.cType() == CHESS_SHUAI {
 				return NewPoint(x, y)
 			}
 		}
@@ -492,7 +492,7 @@ func (c *chessBoard) getBlackShuaiPoint() (shuaiPoint Point) {
 	for x = 3; x <= 5; x++ {
 		for y = 7; y <= 9; y++ {
 			chess := c.getChess(x, y)
-			if chess != 0 && chess.cType() == CHESS_SHUAI {
+			if !chess.isNone() && chess.cType() == CHESS_SHUAI {
 				return NewPoint(x, y)
 			}
 		}
@@ -524,7 +524,7 @@ func (c *chessBoard) getAllCanAction(color uint8) (actions []Action) {
 	for x = 0; x < 9; x++ {
 		for y = 0; y < 10; y++ {
 			chess := c.getChess(x, y)
-			if chess != 0 && chess.color() == color {
+			if !chess.isNone() && chess.color() == color {
 				point := NewPoint(x, y)
 				actionsTmp := c.getAllCanActionChess(point)
 				actions = append(actions, actionsTmp...) // slice合并
