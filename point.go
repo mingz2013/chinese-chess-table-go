@@ -4,13 +4,13 @@ package chinese_chess_table_go
 type Point int8
 
 func (p Point) X() int8 {
-	return int8(p) / 9
-}
-
-func (p Point) Y() int8 {
 	return int8(p) % 9
 }
 
+func (p Point) Y() int8 {
+	return int8(p) / 9
+}
+
 func NewPoint(x, y int8) (p Point) {
-	return Point(x * y)
+	return Point(x + y*9)
 }
