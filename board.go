@@ -4,7 +4,8 @@ import "log"
 
 // 我方为红方视角，以红方左下侧为原点
 
-type chessBoard [9][10]Chess
+//type chessBoard [9][10]Chess
+type chessBoard [9 * 10]Chess
 
 func NewChessBoard() *chessBoard {
 	c := &chessBoard{}
@@ -13,43 +14,43 @@ func NewChessBoard() *chessBoard {
 }
 
 func (c *chessBoard) init() {
-	c[0][0] = NewChess(CHESS_JU, COLOR_RED)
-	c[1][0] = NewChess(CHESS_MA, COLOR_RED)
-	c[2][0] = NewChess(CHESS_XIANG, COLOR_RED)
-	c[3][0] = NewChess(CHESS_SHI, COLOR_RED)
-	c[4][0] = NewChess(CHESS_SHUAI, COLOR_RED)
-	c[5][0] = NewChess(CHESS_SHI, COLOR_RED)
-	c[6][0] = NewChess(CHESS_XIANG, COLOR_RED)
-	c[7][0] = NewChess(CHESS_MA, COLOR_RED)
-	c[8][0] = NewChess(CHESS_JU, COLOR_RED)
+	c[NewPoint(0, 0)] = NewChess(CHESS_JU, COLOR_RED)
+	c[NewPoint(1, 0)] = NewChess(CHESS_MA, COLOR_RED)
+	c[NewPoint(2, 0)] = NewChess(CHESS_XIANG, COLOR_RED)
+	c[NewPoint(3, 0)] = NewChess(CHESS_SHI, COLOR_RED)
+	c[NewPoint(4, 0)] = NewChess(CHESS_SHUAI, COLOR_RED)
+	c[NewPoint(5, 0)] = NewChess(CHESS_SHI, COLOR_RED)
+	c[NewPoint(6, 0)] = NewChess(CHESS_XIANG, COLOR_RED)
+	c[NewPoint(7, 0)] = NewChess(CHESS_MA, COLOR_RED)
+	c[NewPoint(8, 0)] = NewChess(CHESS_JU, COLOR_RED)
 
-	c[2][2] = NewChess(CHESS_PAO, COLOR_RED)
-	c[8][2] = NewChess(CHESS_PAO, COLOR_RED)
+	c[NewPoint(2, 2)] = NewChess(CHESS_PAO, COLOR_RED)
+	c[NewPoint(8, 2)] = NewChess(CHESS_PAO, COLOR_RED)
 
-	c[0][3] = NewChess(CHESS_BING, COLOR_RED)
-	c[2][3] = NewChess(CHESS_BING, COLOR_RED)
-	c[4][3] = NewChess(CHESS_BING, COLOR_RED)
-	c[6][3] = NewChess(CHESS_BING, COLOR_RED)
-	c[8][3] = NewChess(CHESS_BING, COLOR_RED)
+	c[NewPoint(0, 3)] = NewChess(CHESS_BING, COLOR_RED)
+	c[NewPoint(2, 3)] = NewChess(CHESS_BING, COLOR_RED)
+	c[NewPoint(4, 3)] = NewChess(CHESS_BING, COLOR_RED)
+	c[NewPoint(6, 3)] = NewChess(CHESS_BING, COLOR_RED)
+	c[NewPoint(8, 3)] = NewChess(CHESS_BING, COLOR_RED)
 
-	c[0][6] = NewChess(CHESS_BING, COLOR_BLACK)
-	c[2][6] = NewChess(CHESS_BING, COLOR_BLACK)
-	c[4][6] = NewChess(CHESS_BING, COLOR_BLACK)
-	c[6][6] = NewChess(CHESS_BING, COLOR_BLACK)
-	c[8][6] = NewChess(CHESS_BING, COLOR_BLACK)
+	c[NewPoint(0, 6)] = NewChess(CHESS_BING, COLOR_BLACK)
+	c[NewPoint(2, 6)] = NewChess(CHESS_BING, COLOR_BLACK)
+	c[NewPoint(4, 6)] = NewChess(CHESS_BING, COLOR_BLACK)
+	c[NewPoint(6, 6)] = NewChess(CHESS_BING, COLOR_BLACK)
+	c[NewPoint(8, 6)] = NewChess(CHESS_BING, COLOR_BLACK)
 
-	c[2][7] = NewChess(CHESS_PAO, COLOR_BLACK)
-	c[8][7] = NewChess(CHESS_PAO, COLOR_BLACK)
+	c[NewPoint(2, 7)] = NewChess(CHESS_PAO, COLOR_BLACK)
+	c[NewPoint(8, 7)] = NewChess(CHESS_PAO, COLOR_BLACK)
 
-	c[0][9] = NewChess(CHESS_JU, COLOR_BLACK)
-	c[1][9] = NewChess(CHESS_MA, COLOR_BLACK)
-	c[2][9] = NewChess(CHESS_XIANG, COLOR_BLACK)
-	c[3][9] = NewChess(CHESS_SHI, COLOR_BLACK)
-	c[4][9] = NewChess(CHESS_SHUAI, COLOR_BLACK)
-	c[5][9] = NewChess(CHESS_SHI, COLOR_BLACK)
-	c[6][9] = NewChess(CHESS_XIANG, COLOR_BLACK)
-	c[7][9] = NewChess(CHESS_MA, COLOR_BLACK)
-	c[8][9] = NewChess(CHESS_JU, COLOR_BLACK)
+	c[NewPoint(0, 9)] = NewChess(CHESS_JU, COLOR_BLACK)
+	c[NewPoint(1, 9)] = NewChess(CHESS_MA, COLOR_BLACK)
+	c[NewPoint(2, 9)] = NewChess(CHESS_XIANG, COLOR_BLACK)
+	c[NewPoint(3, 9)] = NewChess(CHESS_SHI, COLOR_BLACK)
+	c[NewPoint(4, 9)] = NewChess(CHESS_SHUAI, COLOR_BLACK)
+	c[NewPoint(5, 9)] = NewChess(CHESS_SHI, COLOR_BLACK)
+	c[NewPoint(6, 9)] = NewChess(CHESS_XIANG, COLOR_BLACK)
+	c[NewPoint(7, 9)] = NewChess(CHESS_MA, COLOR_BLACK)
+	c[NewPoint(8, 9)] = NewChess(CHESS_JU, COLOR_BLACK)
 
 }
 
@@ -57,27 +58,27 @@ func (c *chessBoard) getInfo() {
 }
 
 func (c *chessBoard) getChessBYPoint(point Point) Chess {
-	return c.getChess(point.X(), point.Y())
+	return c[point]
 }
 
 func (c *chessBoard) getChess(x, y uint8) Chess {
-	return c[x][y]
+	return c.getChessBYPoint(NewPoint(x, y))
 }
 
-func (c *chessBoard) setChess(x, y uint8, chess Chess) {
-	c[x][y] = chess
+func (c *chessBoard) setChess(point Point, chess Chess) {
+	c[point] = chess
 }
 
-func (c *chessBoard) clearChess(x, y uint8) {
-	c[x][y] = 0
+func (c *chessBoard) clearChess(point Point) {
+	c[point] = 0
 }
 
 func (c *chessBoard) move(action Action) (dstChess Chess) {
 	srcChess := c.getChessBYPoint(action.Src)
 	dstChess = c.getChessBYPoint(action.Dst)
 
-	c.setChess(action.Dst.X(), action.Dst.Y(), srcChess)
-	c.clearChess(action.Src.X(), action.Src.Y())
+	c.setChess(action.Dst, srcChess)
+	c.clearChess(action.Src)
 
 	return dstChess
 }
@@ -86,10 +87,10 @@ func (c *chessBoard) rollbackMove(action Action, dstChess Chess) {
 	srcChess := c.getChessBYPoint(action.Src)
 	dstChess = c.getChessBYPoint(action.Dst)
 
-	c.setChess(action.Src.X(), action.Src.Y(), srcChess)
-	c.clearChess(action.Dst.X(), action.Dst.Y())
+	c.setChess(action.Src, srcChess)
+	c.clearChess(action.Dst)
 	if dstChess != 0 {
-		c.setChess(action.Dst.X(), action.Dst.Y(), dstChess)
+		c.setChess(action.Dst, dstChess)
 	}
 }
 
