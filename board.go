@@ -57,12 +57,12 @@ func (c *chessBoard) init() {
 func (c *chessBoard) getInfo() {
 }
 
-func (c *chessBoard) getChessBYPoint(point Point) Chess {
+func (c *chessBoard) getChessByPoint(point Point) Chess {
 	return c[point]
 }
 
 func (c *chessBoard) getChess(x, y uint8) Chess {
-	return c.getChessBYPoint(NewPoint(x, y))
+	return c.getChessByPoint(NewPoint(x, y))
 }
 
 func (c *chessBoard) setChess(point Point, chess Chess) {
@@ -74,8 +74,8 @@ func (c *chessBoard) clearChess(point Point) {
 }
 
 func (c *chessBoard) move(action Action) (dstChess Chess) {
-	srcChess := c.getChessBYPoint(action.Src)
-	dstChess = c.getChessBYPoint(action.Dst)
+	srcChess := c.getChessByPoint(action.Src)
+	dstChess = c.getChessByPoint(action.Dst)
 
 	c.setChess(action.Dst, srcChess)
 	c.clearChess(action.Src)
@@ -84,8 +84,8 @@ func (c *chessBoard) move(action Action) (dstChess Chess) {
 }
 
 func (c *chessBoard) rollbackMove(action Action, dstChess Chess) {
-	srcChess := c.getChessBYPoint(action.Src)
-	dstChess = c.getChessBYPoint(action.Dst)
+	srcChess := c.getChessByPoint(action.Src)
+	dstChess = c.getChessByPoint(action.Dst)
 
 	c.setChess(action.Src, srcChess)
 	c.clearChess(action.Dst)
@@ -97,7 +97,7 @@ func (c *chessBoard) rollbackMove(action Action, dstChess Chess) {
 func (c *chessBoard) testMove(action Action) bool {
 	// 测试走动
 	//dstChess := c.getChessBYPoint(action.Dst)
-	srcChess := c.getChessBYPoint(action.Src)
+	srcChess := c.getChessByPoint(action.Src)
 
 	dstChess := c.move(action)
 	// 走动后是否被将军
@@ -129,15 +129,15 @@ func (c *chessBoard) DoAction(action Action) (ok bool) {
 	// 检查棋子走动后是否将对方
 
 	// 检查棋子走动后是否赢
-	c.checkWin(c.getChessBYPoint(action.Dst).color())
+	c.checkWin(c.getChessByPoint(action.Dst).color())
 	return
 }
 
 func (c *chessBoard) checkAction(action Action) (ok bool) {
 	// 检查规则，action是否可以正确执行
 
-	srcChess := c.getChessBYPoint(action.Src)
-	dstChess := c.getChessBYPoint(action.Dst)
+	srcChess := c.getChessByPoint(action.Src)
+	dstChess := c.getChessByPoint(action.Dst)
 
 	ok = c.checkActionSameColor(action, srcChess, dstChess)
 	if !ok {
@@ -246,7 +246,7 @@ func (c *chessBoard) checkMaAction(action Action, srcChess, dstChess Chess) bool
 		maJiaoPoint = NewPoint((action.Src.X()-action.Dst.X())/2+action.Src.X(), action.Src.Y())
 	}
 
-	if !c.getChessBYPoint(maJiaoPoint).isNone() {
+	if !c.getChessByPoint(maJiaoPoint).isNone() {
 		return false
 	}
 
@@ -262,7 +262,7 @@ func (c *chessBoard) checkXiangAction(action Action, srcChess, dstChess Chess) b
 	}
 
 	xiangYanPoint := NewPoint((action.Src.X()-action.Dst.X())/2+action.Src.X(), (action.Src.Y()-action.Dst.Y())/2+action.Src.Y())
-	if !c.getChessBYPoint(xiangYanPoint).isNone() {
+	if !c.getChessByPoint(xiangYanPoint).isNone() {
 		return false
 	}
 
