@@ -37,5 +37,7 @@ func otherColor(color int) int {
 		return COLOR_RED
 	} else if color == COLOR_RED {
 		return COLOR_BLACK
+	} else {
+		panic("error color")
 	}
 }
