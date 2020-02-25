@@ -500,12 +500,54 @@ func (c *chessBoard) getBlackShuaiPoint() (shuaiPoint *point) {
 	return nil
 }
 
+func (c *chessBoard) getAllCanActionChess(p *point) (actions []*action) {
+	// 找出chess所有可以移动的action
+	for x := 0; x < 9; x++ {
+		for y := 0; y < 10; y++ {
+			newPoint := NewPoint(x, y)
+			newAction := NewAction(p, newPoint)
+			ok := c.checkAction(newAction)
+			if ok {
+				actions = append(actions, newAction)
+			}
+		}
+	}
+
+	return
+}
+
+func (c *chessBoard) getAllCanAction(color int) (actions []*action) {
+	// 获取color方的所有可以移动的action
+
+	for x := 0; x < 9; x++ {
+		for y := 0; y < 10; y++ {
+			chess := c.getChess(x, y)
+			if chess != nil && chess.Color() == color {
+				point := NewPoint(x, y)
+				actionsTmp := c.getAllCanActionChess(point)
+				actions = append(actions, actionsTmp...) // slice合并
+			}
+		}
+	}
+
+	return
+}
+
 func (c *chessBoard) checkWin(color int) bool {
 	// 检查color方是否赢
 	// 检查输赢，我方走了一步，
 	// 最笨的方法，遍历对方可以走动的步骤，然后检查是否仍然将军
 	if !c.checkJiangJun(otherColor(color)) {
 		return false
+	}
+
+	actions := c.getAllCanAction(otherColor(color))
+
+	for _, action := range actions {
+		if !c.testMove(action) {
+			// 如果走动后没有被将军，则没有赢
+			return false
+		}
 	}
 
 	return true
