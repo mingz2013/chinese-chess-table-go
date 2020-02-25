@@ -70,7 +70,7 @@ func (c *chessBoard) setChess(point Point, chess Chess) {
 }
 
 func (c *chessBoard) clearChess(point Point) {
-	c[point] = 0
+	c[point] = NewChess(COLOR_NONE, CHESS_NONE)
 }
 
 func (c *chessBoard) move(action Action) (dstChess Chess) {
@@ -484,7 +484,7 @@ func (c *chessBoard) getRedShuaiPoint() (shuaiPoint Point) {
 		}
 	}
 
-	return 0
+	panic("not found")
 }
 
 func (c *chessBoard) getBlackShuaiPoint() (shuaiPoint Point) {
@@ -498,7 +498,7 @@ func (c *chessBoard) getBlackShuaiPoint() (shuaiPoint Point) {
 		}
 	}
 
-	return 0
+	panic("not found")
 }
 
 func (c *chessBoard) getAllCanActionChess(p Point) (actions []Action) {
