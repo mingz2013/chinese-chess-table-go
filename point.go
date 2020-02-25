@@ -1,10 +1,10 @@
 package chinese_chess_table_go
 
-type Point struct {
+type point struct {
 	X int
 	Y int
 }
 
-func NewPoint(x, y int) *Point {
-	return &Point{x, y}
+func NewPoint(x, y int) *point {
+	return &point{x, y}
 }

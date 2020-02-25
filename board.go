@@ -4,7 +4,7 @@ import "log"
 
 // 我方为红方视角，以红方左下侧为原点
 
-type chessBoard [9][10]*Chess
+type chessBoard [9][10]*chess
 
 func NewChessBoard() *chessBoard {
 	c := &chessBoard{}
@@ -56,15 +56,15 @@ func (c *chessBoard) init() {
 func (c *chessBoard) getInfo() {
 }
 
-func (c *chessBoard) getChessBYPoint(point *Point) *Chess {
+func (c *chessBoard) getChessBYPoint(point *point) *chess {
 	return c.getChess(point.X, point.Y)
 }
 
-func (c *chessBoard) getChess(x, y int) *Chess {
+func (c *chessBoard) getChess(x, y int) *chess {
 	return c[x][y]
 }
 
-func (c *chessBoard) setChess(x int, y int, chess *Chess) {
+func (c *chessBoard) setChess(x int, y int, chess *chess) {
 	c[x][y] = chess
 }
 
@@ -72,7 +72,7 @@ func (c *chessBoard) clearChess(x, y int) {
 	c[x][y] = nil
 }
 
-func (c *chessBoard) DoAction(action *Action) (ok bool) {
+func (c *chessBoard) DoAction(action *action) (ok bool) {
 
 	ok = c.checkAction(action)
 	if !ok {
@@ -88,7 +88,7 @@ func (c *chessBoard) DoAction(action *Action) (ok bool) {
 	return
 }
 
-func (c *chessBoard) checkAction(action *Action) (ok bool) {
+func (c *chessBoard) checkAction(action *action) (ok bool) {
 	// 检查规则，action是否可以正确执行
 
 	srcChess := c.getChessBYPoint(action.Src)
@@ -122,7 +122,7 @@ func (c *chessBoard) checkAction(action *Action) (ok bool) {
 	return
 }
 
-func (c *chessBoard) checkActionSameColor(action *Action, srcChess, dstChess *Chess) bool {
+func (c *chessBoard) checkActionSameColor(action *action, srcChess, dstChess *chess) bool {
 	// 相同颜色的不能互相吃
 	if srcChess.Color() == dstChess.Color() {
 		return false
@@ -130,7 +130,7 @@ func (c *chessBoard) checkActionSameColor(action *Action, srcChess, dstChess *Ch
 	return true
 }
 
-func (c *chessBoard) checkJuAction(action *Action, srcChess, dstChess *Chess) bool {
+func (c *chessBoard) checkJuAction(action *action, srcChess, dstChess *chess) bool {
 	// 检查路径，是否满足路线规则
 
 	// 在一条直线上，
@@ -175,7 +175,7 @@ func (c *chessBoard) checkJuAction(action *Action, srcChess, dstChess *Chess) bo
 
 }
 
-func (c *chessBoard) checkMaAction(action *Action, srcChess, dstChess *Chess) bool {
+func (c *chessBoard) checkMaAction(action *action, srcChess, dstChess *chess) bool {
 
 	// 马走日，
 
@@ -193,7 +193,7 @@ func (c *chessBoard) checkMaAction(action *Action, srcChess, dstChess *Chess) bo
 		return false
 	}
 
-	var maJiaoPoint *Point
+	var maJiaoPoint *point
 	if Abs(action.Src.X-action.Dst.X) == 1 {
 		maJiaoPoint = NewPoint(action.Src.X, (action.Src.Y-action.Dst.Y)/2+action.Src.Y)
 
@@ -208,7 +208,7 @@ func (c *chessBoard) checkMaAction(action *Action, srcChess, dstChess *Chess) bo
 	return false
 }
 
-func (c *chessBoard) checkXiangAction(action *Action, srcChess, dstChess *Chess) bool {
+func (c *chessBoard) checkXiangAction(action *action, srcChess, dstChess *chess) bool {
 	// 象走田
 	// 别象眼
 
@@ -224,7 +224,7 @@ func (c *chessBoard) checkXiangAction(action *Action, srcChess, dstChess *Chess)
 	return false
 }
 
-func (c *chessBoard) checkShiAction(action *Action, srcChess, dstChess *Chess) bool {
+func (c *chessBoard) checkShiAction(action *action, srcChess, dstChess *chess) bool {
 	//士，
 	// 只能斜着走
 	// 只能在九宫格
@@ -254,7 +254,7 @@ func (c *chessBoard) checkShiAction(action *Action, srcChess, dstChess *Chess) b
 	return true
 }
 
-func (c *chessBoard) checkShuaiAction(action *Action, srcChess, dstChess *Chess) bool {
+func (c *chessBoard) checkShuaiAction(action *action, srcChess, dstChess *chess) bool {
 
 	// 帅，只能在九宫格
 
@@ -288,7 +288,7 @@ func (c *chessBoard) checkShuaiAction(action *Action, srcChess, dstChess *Chess)
 	return true
 }
 
-func (c *chessBoard) checkPaoAction(action *Action, srcChess, dstChess *Chess) bool {
+func (c *chessBoard) checkPaoAction(action *action, srcChess, dstChess *chess) bool {
 
 	// 炮
 	// 横竖移动多个位置，
@@ -353,7 +353,7 @@ func (c *chessBoard) checkPaoAction(action *Action, srcChess, dstChess *Chess) b
 	return true
 }
 
-func (c *chessBoard) checkBingAction(action *Action, srcChess, dstChess *Chess) bool {
+func (c *chessBoard) checkBingAction(action *action, srcChess, dstChess *chess) bool {
 	// 兵，过河之前，过河之后，
 	// 过河之前只能向前，过河之后可以向前和平移
 
@@ -403,7 +403,7 @@ func (c *chessBoard) checkBingAction(action *Action, srcChess, dstChess *Chess) 
 func (c *chessBoard) checkJiangJun(color int) (ok bool) {
 	// 检查将军
 
-	var shuaiPoint *Point
+	var shuaiPoint *point
 	if color == COLOR_RED {
 		shuaiPoint = c.getRedShuaiPoint()
 	} else {
@@ -428,7 +428,7 @@ func (c *chessBoard) checkJiangJun(color int) (ok bool) {
 	return false
 }
 
-func (c *chessBoard) getRedShuaiPoint() (shuaiPoint *Point) {
+func (c *chessBoard) getRedShuaiPoint() (shuaiPoint *point) {
 
 	for i := 3; i <= 5; i++ {
 		for j := 0; j <= 2; j++ {
@@ -442,7 +442,7 @@ func (c *chessBoard) getRedShuaiPoint() (shuaiPoint *Point) {
 	return nil
 }
 
-func (c *chessBoard) getBlackShuaiPoint() (shuaiPoint *Point) {
+func (c *chessBoard) getBlackShuaiPoint() (shuaiPoint *point) {
 
 	for i := 3; i <= 5; i++ {
 		for j := 7; j <= 9; j++ {

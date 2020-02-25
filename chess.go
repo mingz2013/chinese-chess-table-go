@@ -15,19 +15,19 @@ const (
 	COLOR_BLACK = 2
 )
 
-type Chess struct {
+type chess struct {
 	color int
 	cType int
 }
 
-func NewChess(color, cType int) *Chess {
-	return &Chess{color: color, cType: cType}
+func NewChess(color, cType int) *chess {
+	return &chess{color: color, cType: cType}
 }
 
-func (c *Chess) IsNone() bool {
+func (c *chess) IsNone() bool {
 	return c.color == COLOR_NONE || c.cType == CHESS_NONE
 }
 
-func (c *Chess) Color() int {
+func (c *chess) Color() int {
 	return c.color
 }
