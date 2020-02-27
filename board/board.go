@@ -24,8 +24,8 @@ func (c *chessBoard) init() {
 	c[NewPoint(7, 0)] = NewChess(COLOR_RED, CHESS_MA)
 	c[NewPoint(8, 0)] = NewChess(COLOR_RED, CHESS_JU)
 
-	c[NewPoint(2, 2)] = NewChess(COLOR_RED, CHESS_PAO)
-	c[NewPoint(8, 2)] = NewChess(COLOR_RED, CHESS_PAO)
+	c[NewPoint(1, 2)] = NewChess(COLOR_RED, CHESS_PAO)
+	c[NewPoint(7, 2)] = NewChess(COLOR_RED, CHESS_PAO)
 
 	c[NewPoint(0, 3)] = NewChess(COLOR_RED, CHESS_BING)
 	c[NewPoint(2, 3)] = NewChess(COLOR_RED, CHESS_BING)
@@ -39,8 +39,8 @@ func (c *chessBoard) init() {
 	c[NewPoint(6, 6)] = NewChess(COLOR_BLACK, CHESS_BING)
 	c[NewPoint(8, 6)] = NewChess(COLOR_BLACK, CHESS_BING)
 
-	c[NewPoint(2, 7)] = NewChess(COLOR_BLACK, CHESS_PAO)
-	c[NewPoint(8, 7)] = NewChess(COLOR_BLACK, CHESS_PAO)
+	c[NewPoint(1, 7)] = NewChess(COLOR_BLACK, CHESS_PAO)
+	c[NewPoint(7, 7)] = NewChess(COLOR_BLACK, CHESS_PAO)
 
 	c[NewPoint(0, 9)] = NewChess(COLOR_BLACK, CHESS_JU)
 	c[NewPoint(1, 9)] = NewChess(COLOR_BLACK, CHESS_MA)
@@ -58,7 +58,7 @@ func (c *chessBoard) getInfo() {
 }
 
 func (c *chessBoard) getChessByPoint(point Point) Chess {
-	log.Println("getChessByPoint << point:(", point.X(), ",", point.Y(), ")")
+	//log.Println("getChessByPoint << point:(", point.X(), ",", point.Y(), ")")
 	return c[point]
 }
 
@@ -144,12 +144,12 @@ func (c *chessBoard) checkAction(action Action) (ok bool) {
 
 	srcChess := c.getChessByPoint(action.Src)
 	dstChess := c.getChessByPoint(action.Dst)
-
+	log.Println("checkAction ", action.Src.X(), action.Src.Y(), action.Dst.X(), action.Dst.Y(), srcChess.color(), srcChess.cType(), dstChess.color(), dstChess.cType())
 	if srcChess.color() == dstChess.color() {
 		log.Println("checkAction is same color")
 		return false
 	}
-	log.Println("checkAction type", action.Src.X(), action.Src.Y(), action.Dst.X(), action.Dst.Y(), srcChess.color(), srcChess.cType())
+
 	switch srcChess.cType() {
 	case CHESS_NONE:
 		log.Println("checkAction chess is none")
@@ -235,24 +235,21 @@ func (c *chessBoard) checkMaAction(action Action, srcChess, dstChess Chess) bool
 
 	// 别马脚
 
+	var maJiaoPoint Point
 	if Abs(action.Src.X()-action.Dst.X()) == 1 {
-		if Abs(action.Src.Y()-action.Dst.Y()) != 2 {
+		if Abs(action.Src.Y()-action.Dst.Y()) == 2 {
+			maJiaoPoint = NewPoint(action.Src.X(), (action.Dst.Y()-action.Src.Y())/2+action.Src.Y())
+		} else {
 			return false
 		}
-	} else if Abs(action.Src.X()-action.Dst.Y()) == 2 {
-		if Abs(action.Src.Y()-action.Dst.Y()) != 1 {
+	} else if Abs(action.Src.Y()-action.Dst.Y()) == 1 {
+		if Abs(action.Src.X()-action.Dst.X()) == 2 {
+			maJiaoPoint = NewPoint((action.Dst.X()-action.Src.X())/2+action.Src.X(), action.Src.Y())
+		} else {
 			return false
 		}
 	} else {
 		return false
-	}
-
-	var maJiaoPoint Point
-	if Abs(action.Src.X()-action.Dst.X()) == 1 {
-		maJiaoPoint = NewPoint(action.Src.X(), action.Src.Y()-action.Dst.Y()/2+action.Src.Y())
-
-	} else {
-		maJiaoPoint = NewPoint((action.Src.X()-action.Dst.X())/2+action.Src.X(), action.Src.Y())
 	}
 
 	if !c.getChessByPoint(maJiaoPoint).isNone() {
