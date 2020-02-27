@@ -37,9 +37,9 @@ func (c *chessBoard) Print() {
 	for y = 0; y < 10; y++ {
 		c.printShu()
 		fmt.Print("||")
-		fmt.Print("--")
+		fmt.Print("-")
 		for x = 0; x < 9; x++ {
-			fmt.Print("-")
+			fmt.Print("--")
 			chess := c.getChess(x, y)
 			if !chess.isNone() {
 				fmt.Print(chess)
@@ -48,11 +48,11 @@ func (c *chessBoard) Print() {
 				//fmt.Print(chess)
 			}
 
-			fmt.Print("--")
+			fmt.Print("-")
 		}
 		fmt.Print("--")
 		fmt.Print("||\n")
-		c.printShu()
+		//c.printShu()
 		c.printShu()
 
 	}
