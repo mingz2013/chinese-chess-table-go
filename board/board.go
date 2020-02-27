@@ -1,6 +1,9 @@
 package board
 
-import "log"
+import (
+	"fmt"
+	"log"
+)
 
 // 我方为红方视角，以红方左下侧为原点
 
@@ -11,6 +14,49 @@ func NewChessBoard() *chessBoard {
 	c := &chessBoard{}
 	c.init()
 	return c
+}
+
+func (c *chessBoard) String() string {
+	return fmt.Sprintf("")
+}
+
+func (c *chessBoard) printShu() {
+	shu := "    |  "
+	fmt.Print("||")
+	var x int8
+	for x = 0; x < 9; x++ {
+		fmt.Print(shu)
+	}
+	fmt.Print(" ||\n")
+}
+
+func (c *chessBoard) Print() {
+
+	var x, y int8
+
+	for y = 0; y < 10; y++ {
+		c.printShu()
+		fmt.Print("||")
+		fmt.Print("--")
+		for x = 0; x < 9; x++ {
+			fmt.Print("-")
+			chess := c.getChess(x, y)
+			if !chess.isNone() {
+				fmt.Print(chess)
+			} else {
+				fmt.Print("---")
+				//fmt.Print(chess)
+			}
+
+			fmt.Print("--")
+		}
+		fmt.Print("--")
+		fmt.Print("||\n")
+		c.printShu()
+		c.printShu()
+
+	}
+
 }
 
 func (c *chessBoard) init() {

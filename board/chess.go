@@ -71,7 +71,8 @@ func (c Chess) colorString() string {
 }
 
 func (c Chess) String() string {
-	return fmt.Sprintf("Chess(%v, %v)", c.colorString(), c.cTypeString())
+	//return fmt.Sprintf("Chess(%v, %v)", c.colorString(), c.cTypeString())
+	return fmt.Sprintf("(%v)", c.cTypeString())
 }
 
 func NewChess(color, cType uint8) (c Chess) {
