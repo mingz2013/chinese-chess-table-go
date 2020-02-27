@@ -234,29 +234,33 @@ func (c *chessBoard) checkMaAction(action Action, srcChess, dstChess Chess) bool
 	// 马走日，
 
 	// 别马脚
-
+	log.Println("checkMaAction <<")
 	var maJiaoPoint Point
 	if Abs(action.Src.X()-action.Dst.X()) == 1 {
 		if Abs(action.Src.Y()-action.Dst.Y()) == 2 {
 			maJiaoPoint = NewPoint(action.Src.X(), (action.Dst.Y()-action.Src.Y())/2+action.Src.Y())
 		} else {
+			log.Println("checkMaAction >>", false)
 			return false
 		}
 	} else if Abs(action.Src.Y()-action.Dst.Y()) == 1 {
 		if Abs(action.Src.X()-action.Dst.X()) == 2 {
 			maJiaoPoint = NewPoint((action.Dst.X()-action.Src.X())/2+action.Src.X(), action.Src.Y())
 		} else {
+			log.Println("checkMaAction >>", false)
 			return false
 		}
 	} else {
+		log.Println("checkMaAction >>", false)
 		return false
 	}
 
 	if !c.getChessByPoint(maJiaoPoint).isNone() {
+		log.Println("checkMaAction >>", "majiao", false)
 		return false
 	}
 
-	return false
+	return true
 }
 
 func (c *chessBoard) checkXiangAction(action Action, srcChess, dstChess Chess) bool {

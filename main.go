@@ -8,10 +8,11 @@ import (
 func getActionList() (actions []board.Action) {
 
 	actions = append(actions,
-		board.NewAction2(0, 0, 0, 1),
-		board.NewAction2(0, 1, 0, 2),
+		board.NewAction2(0, 0, 0, 1), // 車
+		board.NewAction2(0, 1, 0, 2), // 車
 
-		board.NewAction2(1, 0, 2, 2),
+		board.NewAction2(1, 0, 2, 2), // 马
+
 		board.NewAction2(1, 9, 0, 7),
 
 		board.NewAction2(2, 0, 4, 2),
@@ -30,9 +31,10 @@ func main() {
 	b := board.NewChessBoard()
 
 	for _, action := range actionList {
+		log.Println("for action begin", action)
 		ok := b.DoAction(action)
-		log.Println("for action ok", action.Src.X(), action.Src.Y(), action.Dst.X(), action.Dst.Y(), ok)
 		if !ok {
+			log.Println("for action ok", action.Src.X(), action.Src.Y(), action.Dst.X(), action.Dst.Y(), ok)
 			break
 		}
 	}
