@@ -27,12 +27,51 @@ func (c Chess) cType() uint8 {
 	return uint8(c) >> 4
 }
 
+func (c Chess) cTypeDesc() string {
+	switch c.cType() {
+	case CHESS_NONE:
+		return "空"
+	case CHESS_JU:
+		return "車"
+	case CHESS_MA:
+		return "马"
+	case CHESS_XIANG:
+		return "象"
+	case CHESS_SHI:
+		return "士"
+	case CHESS_SHUAI:
+		return "帅"
+	case CHESS_PAO:
+		return "炮"
+	case CHESS_BING:
+		return "兵"
+	default:
+		log.Fatal(c.cType())
+		return ""
+	}
+
+}
+
 func (c Chess) color() uint8 {
 	return (uint8(c) << 4) >> 4
 }
 
+func (c Chess) colorDesc() string {
+	switch c.color() {
+	case COLOR_NONE:
+		return "空"
+	case COLOR_RED:
+		return "红"
+	case COLOR_BLACK:
+		return "黑"
+	default:
+		log.Fatal(c.color())
+		return ""
+	}
+}
+
 func (c Chess) String() string {
-	return fmt.Sprintf("Chess(%v, %v)", c.color(), c.cType())
+	return fmt.Sprintf("Chess(%v, %v)", c.colorDesc(), c.cTypeDesc())
 }
 
 func NewChess(color, cType uint8) (c Chess) {
