@@ -28,7 +28,7 @@ func main() {
 
 	for _, action := range actionList {
 		ok := b.DoAction(action)
-		log.Println("for action ok", action, ok)
+		log.Println("for action ok", action.Src.X(), action.Src.Y(), action.Dst.X(), action.Dst.Y(), ok)
 		if !ok {
 			break
 		}

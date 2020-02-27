@@ -1,5 +1,7 @@
 package board
 
+import "log"
+
 const (
 	CHESS_NONE  = 0
 	CHESS_JU    = 1
@@ -37,6 +39,7 @@ func (c Chess) isNone() bool {
 }
 
 func otherColor(color uint8) uint8 {
+	log.Println("otherColor <<", color)
 	if color == COLOR_BLACK {
 		return COLOR_RED
 	} else if color == COLOR_RED {

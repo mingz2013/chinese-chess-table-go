@@ -79,14 +79,15 @@ func (c *chessBoard) move(action Action) (dstChess Chess) {
 	dstChess = c.getChessByPoint(action.Dst)
 
 	c.setChess(action.Dst, srcChess)
+	log.Println("move dst >>", c.getChessByPoint(action.Dst))
 	c.clearChess(action.Src)
 
 	return dstChess
 }
 
 func (c *chessBoard) rollbackMove(action Action, dstChess Chess) {
-	srcChess := c.getChessByPoint(action.Src)
-	dstChess = c.getChessByPoint(action.Dst)
+	//srcChess := c.getChessByPoint(action.Src)
+	srcChess := c.getChessByPoint(action.Dst)
 
 	c.setChess(action.Src, srcChess)
 	c.clearChess(action.Dst)
@@ -96,6 +97,7 @@ func (c *chessBoard) rollbackMove(action Action, dstChess Chess) {
 }
 
 func (c *chessBoard) testMove(action Action) bool {
+	log.Println("testMove <<", action)
 	// 测试走动
 	//dstChess := c.getChessBYPoint(action.Dst)
 	srcChess := c.getChessByPoint(action.Src)
@@ -106,7 +108,7 @@ func (c *chessBoard) testMove(action Action) bool {
 
 	c.rollbackMove(action, dstChess)
 
-	return isJiang
+	return !isJiang
 
 }
 
@@ -132,6 +134,7 @@ func (c *chessBoard) DoAction(action Action) (ok bool) {
 	// 检查棋子走动后是否将对方
 
 	// 检查棋子走动后是否赢
+	log.Println("DoAction dstChess", c.getChessByPoint(action.Dst))
 	c.checkWin(c.getChessByPoint(action.Dst).color())
 	return
 }
@@ -146,7 +149,7 @@ func (c *chessBoard) checkAction(action Action) (ok bool) {
 		log.Println("checkAction is same color")
 		return false
 	}
-	log.Println("checkAction type", srcChess.color(), srcChess.cType())
+	log.Println("checkAction type", action.Src.X(), action.Src.Y(), action.Dst.X(), action.Dst.Y(), srcChess.color(), srcChess.cType())
 	switch srcChess.cType() {
 	case CHESS_NONE:
 		log.Println("checkAction chess is none")
@@ -185,7 +188,7 @@ func (c *chessBoard) checkJuAction(action Action, srcChess, dstChess Chess) bool
 
 	// 检查路径上是否有碍事的
 
-	log.Println("checkJuAction", action, srcChess, dstChess)
+	log.Println("checkJuAction", action.Src.X(), action.Src.Y(), action.Dst.X(), action.Dst.Y(), srcChess, dstChess)
 
 	if action.Src.Y() == action.Dst.Y() {
 		var tmp int8
@@ -453,7 +456,7 @@ func (c *chessBoard) checkBingAction(action Action, srcChess, dstChess Chess) bo
 
 func (c *chessBoard) checkJiangJun(color uint8) (ok bool) {
 	// 检查将军, color, 被将军的颜色
-
+	log.Println("checkJiangJun <<", color)
 	var shuaiPoint Point
 	if color == COLOR_RED {
 		shuaiPoint = c.getRedShuaiPoint()
@@ -543,6 +546,7 @@ func (c *chessBoard) getAllCanAction(color uint8) (actions []Action) {
 }
 
 func (c *chessBoard) checkWin(color uint8) bool {
+	log.Println("checkWin <<", color)
 	// 检查color方是否赢
 	// 检查输赢，我方走了一步，
 	// 最笨的方法，遍历对方可以走动的步骤，然后检查是否仍然将军
