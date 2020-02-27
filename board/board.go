@@ -221,7 +221,7 @@ func (c *chessBoard) checkJuAction(action Action, srcChess, dstChess Chess) bool
 
 		}
 	} else {
-		log.Println("checkJuAction  not in same line")
+		//log.Println("checkJuAction  not in same line")
 		return false
 	}
 
@@ -266,17 +266,19 @@ func (c *chessBoard) checkMaAction(action Action, srcChess, dstChess Chess) bool
 func (c *chessBoard) checkXiangAction(action Action, srcChess, dstChess Chess) bool {
 	// 象走田
 	// 别象眼
-
+	log.Println("checkXiangAction <<")
 	if Abs(action.Src.X()-action.Dst.X()) != 2 || Abs(action.Src.Y()-action.Dst.Y()) != 2 {
+		log.Println("checkXiangAction >>")
 		return false
 	}
 
-	xiangYanPoint := NewPoint((action.Src.X()-action.Dst.X())/2+action.Src.X(), (action.Src.Y()-action.Dst.Y())/2+action.Src.Y())
+	xiangYanPoint := NewPoint((action.Dst.X()-action.Src.X())/2+action.Src.X(), (action.Dst.Y()-action.Src.Y())/2+action.Src.Y())
 	if !c.getChessByPoint(xiangYanPoint).isNone() {
+		log.Println("checkXiangAction >>")
 		return false
 	}
 
-	return false
+	return true
 }
 
 func (c *chessBoard) checkShiAction(action Action, srcChess, dstChess Chess) bool {

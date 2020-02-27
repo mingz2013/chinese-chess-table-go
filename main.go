@@ -34,7 +34,7 @@ func main() {
 		log.Println("for action begin", action)
 		ok := b.DoAction(action)
 		if !ok {
-			log.Println("for action ok", action.Src.X(), action.Src.Y(), action.Dst.X(), action.Dst.Y(), ok)
+			log.Println("for action error", action.Src.X(), action.Src.Y(), action.Dst.X(), action.Dst.Y())
 			break
 		}
 	}
