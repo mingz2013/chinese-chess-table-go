@@ -1,5 +1,7 @@
 package board
 
+import "fmt"
+
 type Action struct {
 	Src Point
 	Dst Point
@@ -7,6 +9,9 @@ type Action struct {
 
 func (a Action) getInfo() {
 
+}
+func (c Action) String() string {
+	return fmt.Sprintf("Action(%v, %v)", c.Src, c.Dst)
 }
 
 func NewAction(src, dst Point) Action {

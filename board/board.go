@@ -144,7 +144,7 @@ func (c *chessBoard) checkAction(action Action) (ok bool) {
 
 	srcChess := c.getChessByPoint(action.Src)
 	dstChess := c.getChessByPoint(action.Dst)
-	log.Println("checkAction ", action.Src.X(), action.Src.Y(), action.Dst.X(), action.Dst.Y(), srcChess.color(), srcChess.cType(), dstChess.color(), dstChess.cType())
+	log.Println("checkAction ", action, srcChess, dstChess)
 	if srcChess.color() == dstChess.color() {
 		log.Println("checkAction is same color")
 		return false
@@ -188,7 +188,7 @@ func (c *chessBoard) checkJuAction(action Action, srcChess, dstChess Chess) bool
 
 	// 检查路径上是否有碍事的
 
-	log.Println("checkJuAction", action.Src.X(), action.Src.Y(), action.Dst.X(), action.Dst.Y(), srcChess, dstChess)
+	log.Println("checkJuAction", action, srcChess, dstChess)
 
 	if action.Src.Y() == action.Dst.Y() {
 		var tmp int8
@@ -490,7 +490,7 @@ func (c *chessBoard) getRedShuaiPoint() (shuaiPoint Point) {
 	for x = 3; x <= 5; x++ {
 		for y = 0; y <= 2; y++ {
 			chess := c.getChess(x, y)
-			log.Println("getRedShuaiPoint chess", chess, chess.cType(), chess.color(), NewChess(COLOR_RED, CHESS_SHUAI))
+			log.Println("getRedShuaiPoint chess", chess, NewChess(COLOR_RED, CHESS_SHUAI))
 			if !chess.isNone() && chess.cType() == CHESS_SHUAI {
 				return NewPoint(x, y)
 			}

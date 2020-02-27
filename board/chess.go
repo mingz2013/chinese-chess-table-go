@@ -1,6 +1,9 @@
 package board
 
-import "log"
+import (
+	"fmt"
+	"log"
+)
 
 const (
 	CHESS_NONE  = 0
@@ -26,6 +29,10 @@ func (c Chess) cType() uint8 {
 
 func (c Chess) color() uint8 {
 	return (uint8(c) << 4) >> 4
+}
+
+func (c Chess) String() string {
+	return fmt.Sprintf("Chess(%v, %v)", c.color(), c.cType())
 }
 
 func NewChess(color, cType uint8) (c Chess) {
