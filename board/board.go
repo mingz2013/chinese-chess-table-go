@@ -21,13 +21,13 @@ func (c *chessBoard) String() string {
 }
 
 func (c *chessBoard) printShu() {
-	shu := "     |   "
+	shu := "     |  "
 	fmt.Print("||")
 	var x int8
 	for x = 0; x < 9; x++ {
 		fmt.Print(shu)
 	}
-	fmt.Print(" ||\n")
+	fmt.Print("   ||\n")
 }
 
 func (c *chessBoard) Print() {
