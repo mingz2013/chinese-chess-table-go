@@ -20,8 +20,11 @@ func (c *chessBoard) String() string {
 	return fmt.Sprintf("")
 }
 
-func (c *chessBoard) printShu() {
+func (c *chessBoard) printShu(noshu bool) {
 	shu := "       |"
+	if noshu {
+		shu = "        "
+	}
 	fmt.Print("|| ")
 	var x int8
 	for x = 0; x < 8; x++ {
@@ -37,7 +40,7 @@ func (c *chessBoard) Print() {
 	var x, y int8
 
 	for y = 0; y < 10; y++ {
-		c.printShu()
+		c.printShu(y == 5)
 
 		for x = 0; x < 9; x++ {
 
@@ -55,7 +58,7 @@ func (c *chessBoard) Print() {
 				} else if x == 8 {
 					fmt.Print("--||")
 				} else {
-					fmt.Print("--------")
+					fmt.Print("--+-----")
 				}
 
 			}
@@ -64,7 +67,7 @@ func (c *chessBoard) Print() {
 
 		fmt.Print("\n")
 
-		c.printShu()
+		c.printShu(y == 4)
 
 	}
 
