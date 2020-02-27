@@ -21,7 +21,7 @@ func (c *chessBoard) String() string {
 }
 
 func (c *chessBoard) printShu() {
-	shu := "    |  "
+	shu := "     |   "
 	fmt.Print("||")
 	var x int8
 	for x = 0; x < 9; x++ {
@@ -44,7 +44,7 @@ func (c *chessBoard) Print() {
 			if !chess.isNone() {
 				fmt.Print(chess)
 			} else {
-				fmt.Print("---")
+				fmt.Print("-----")
 				//fmt.Print(chess)
 			}
 
