@@ -21,13 +21,15 @@ func (c *chessBoard) String() string {
 }
 
 func (c *chessBoard) printShu() {
-	shu := "     |  "
-	fmt.Print("||")
+	shu := "       |"
+	fmt.Print("|| ")
 	var x int8
-	for x = 0; x < 9; x++ {
+	for x = 0; x < 8; x++ {
 		fmt.Print(shu)
 	}
-	fmt.Print("   ||\n")
+
+	fmt.Print("|\n")
+
 }
 
 func (c *chessBoard) Print() {
@@ -36,23 +38,32 @@ func (c *chessBoard) Print() {
 
 	for y = 0; y < 10; y++ {
 		c.printShu()
-		fmt.Print("||")
-		fmt.Print("-")
+
 		for x = 0; x < 9; x++ {
-			fmt.Print("--")
+
 			chess := c.getChess(x, y)
+
 			if !chess.isNone() {
 				fmt.Print(chess)
+				if x != 8 {
+					fmt.Print("---")
+				}
+
 			} else {
-				fmt.Print("-----")
-				//fmt.Print(chess)
+				if x == 0 {
+					fmt.Print("||------")
+				} else if x == 8 {
+					fmt.Print("--||")
+				} else {
+					fmt.Print("--------")
+				}
+
 			}
 
-			fmt.Print("-")
 		}
-		fmt.Print("--")
-		fmt.Print("||\n")
-		//c.printShu()
+
+		fmt.Print("\n")
+
 		c.printShu()
 
 	}
