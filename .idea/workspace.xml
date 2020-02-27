@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="022a2e22-6d75-4231-892c-41d1358fc5ef" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/board/action.go" beforeDir="false" afterPath="$PROJECT_DIR$/board/action.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/board/board.go" beforeDir="false" afterPath="$PROJECT_DIR$/board/board.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/board/chess.go" beforeDir="false" afterPath="$PROJECT_DIR$/board/chess.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/board/point.go" beforeDir="false" afterPath="$PROJECT_DIR$/board/point.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +39,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/board/board.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
@@ -52,11 +48,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/board/chess.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="347">
-              <caret line="33" selection-start-line="33" selection-end-line="35" selection-end-column="1" />
+            <state relative-caret-position="400">
+              <caret line="68" column="16" selection-start-line="68" selection-start-column="16" selection-end-line="68" selection-end-column="16" />
               <folding>
                 <element signature="e#15#39#0" expanded="true" />
               </folding>
@@ -103,8 +99,8 @@
       <find>checkJiangJun</find>
       <find>testMove</find>
       <find>checkAction</find>
-      <find>not in</find>
       <find>not in s</find>
+      <find>log</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -147,9 +143,9 @@
         <option value="$PROJECT_DIR$/action.go" />
         <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/board/action.go" />
-        <option value="$PROJECT_DIR$/board/chess.go" />
         <option value="$PROJECT_DIR$/board/point.go" />
         <option value="$PROJECT_DIR$/board/board.go" />
+        <option value="$PROJECT_DIR$/board/chess.go" />
       </list>
     </option>
   </component>
@@ -246,7 +242,7 @@
       <window_info id="Favorites" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.41016108" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.30855018" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -349,16 +345,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/board/chess.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="33" selection-start-line="33" selection-end-line="35" selection-end-column="1" />
-          <folding>
-            <element signature="e#15#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/board/point.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -380,6 +366,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="11" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/board/chess.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="68" column="16" selection-start-line="68" selection-start-column="16" selection-end-line="68" selection-end-column="16" />
+          <folding>
+            <element signature="e#15#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

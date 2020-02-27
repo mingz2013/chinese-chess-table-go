@@ -27,7 +27,7 @@ func (c Chess) cType() uint8 {
 	return uint8(c) >> 4
 }
 
-func (c Chess) cTypeDesc() string {
+func (c Chess) cTypeString() string {
 	switch c.cType() {
 	case CHESS_NONE:
 		return "空"
@@ -56,7 +56,7 @@ func (c Chess) color() uint8 {
 	return (uint8(c) << 4) >> 4
 }
 
-func (c Chess) colorDesc() string {
+func (c Chess) colorString() string {
 	switch c.color() {
 	case COLOR_NONE:
 		return "空"
@@ -71,7 +71,7 @@ func (c Chess) colorDesc() string {
 }
 
 func (c Chess) String() string {
-	return fmt.Sprintf("Chess(%v, %v)", c.colorDesc(), c.cTypeDesc())
+	return fmt.Sprintf("Chess(%v, %v)", c.colorString(), c.cTypeString())
 }
 
 func NewChess(color, cType uint8) (c Chess) {
