@@ -1,4 +1,4 @@
-package chinese_chess_table_go
+package board
 
 const (
 	CHESS_NONE  = 0
@@ -23,11 +23,11 @@ func (c Chess) cType() uint8 {
 }
 
 func (c Chess) color() uint8 {
-	return uint8(c) << 4 >> 4
+	return (uint8(c) << 4) >> 4
 }
 
 func NewChess(color, cType uint8) (c Chess) {
-	i := color + cType<<4
+	i := (cType << 4) + color
 	return Chess(i)
 }
 

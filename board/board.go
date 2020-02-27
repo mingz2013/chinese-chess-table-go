@@ -1,4 +1,4 @@
-package chinese_chess_table_go
+package board
 
 import "log"
 
@@ -14,43 +14,43 @@ func NewChessBoard() *chessBoard {
 }
 
 func (c *chessBoard) init() {
-	c[NewPoint(0, 0)] = NewChess(CHESS_JU, COLOR_RED)
-	c[NewPoint(1, 0)] = NewChess(CHESS_MA, COLOR_RED)
-	c[NewPoint(2, 0)] = NewChess(CHESS_XIANG, COLOR_RED)
-	c[NewPoint(3, 0)] = NewChess(CHESS_SHI, COLOR_RED)
-	c[NewPoint(4, 0)] = NewChess(CHESS_SHUAI, COLOR_RED)
-	c[NewPoint(5, 0)] = NewChess(CHESS_SHI, COLOR_RED)
-	c[NewPoint(6, 0)] = NewChess(CHESS_XIANG, COLOR_RED)
-	c[NewPoint(7, 0)] = NewChess(CHESS_MA, COLOR_RED)
-	c[NewPoint(8, 0)] = NewChess(CHESS_JU, COLOR_RED)
+	c[NewPoint(0, 0)] = NewChess(COLOR_RED, CHESS_JU)
+	c[NewPoint(1, 0)] = NewChess(COLOR_RED, CHESS_MA)
+	c[NewPoint(2, 0)] = NewChess(COLOR_RED, CHESS_XIANG)
+	c[NewPoint(3, 0)] = NewChess(COLOR_RED, CHESS_SHI)
+	c[NewPoint(4, 0)] = NewChess(COLOR_RED, CHESS_SHUAI)
+	c[NewPoint(5, 0)] = NewChess(COLOR_RED, CHESS_SHI)
+	c[NewPoint(6, 0)] = NewChess(COLOR_RED, CHESS_XIANG)
+	c[NewPoint(7, 0)] = NewChess(COLOR_RED, CHESS_MA)
+	c[NewPoint(8, 0)] = NewChess(COLOR_RED, CHESS_JU)
 
-	c[NewPoint(2, 2)] = NewChess(CHESS_PAO, COLOR_RED)
-	c[NewPoint(8, 2)] = NewChess(CHESS_PAO, COLOR_RED)
+	c[NewPoint(2, 2)] = NewChess(COLOR_RED, CHESS_PAO)
+	c[NewPoint(8, 2)] = NewChess(COLOR_RED, CHESS_PAO)
 
-	c[NewPoint(0, 3)] = NewChess(CHESS_BING, COLOR_RED)
-	c[NewPoint(2, 3)] = NewChess(CHESS_BING, COLOR_RED)
-	c[NewPoint(4, 3)] = NewChess(CHESS_BING, COLOR_RED)
-	c[NewPoint(6, 3)] = NewChess(CHESS_BING, COLOR_RED)
-	c[NewPoint(8, 3)] = NewChess(CHESS_BING, COLOR_RED)
+	c[NewPoint(0, 3)] = NewChess(COLOR_RED, CHESS_BING)
+	c[NewPoint(2, 3)] = NewChess(COLOR_RED, CHESS_BING)
+	c[NewPoint(4, 3)] = NewChess(COLOR_RED, CHESS_BING)
+	c[NewPoint(6, 3)] = NewChess(COLOR_RED, CHESS_BING)
+	c[NewPoint(8, 3)] = NewChess(COLOR_RED, CHESS_BING)
 
-	c[NewPoint(0, 6)] = NewChess(CHESS_BING, COLOR_BLACK)
-	c[NewPoint(2, 6)] = NewChess(CHESS_BING, COLOR_BLACK)
-	c[NewPoint(4, 6)] = NewChess(CHESS_BING, COLOR_BLACK)
-	c[NewPoint(6, 6)] = NewChess(CHESS_BING, COLOR_BLACK)
-	c[NewPoint(8, 6)] = NewChess(CHESS_BING, COLOR_BLACK)
+	c[NewPoint(0, 6)] = NewChess(COLOR_BLACK, CHESS_BING)
+	c[NewPoint(2, 6)] = NewChess(COLOR_BLACK, CHESS_BING)
+	c[NewPoint(4, 6)] = NewChess(COLOR_BLACK, CHESS_BING)
+	c[NewPoint(6, 6)] = NewChess(COLOR_BLACK, CHESS_BING)
+	c[NewPoint(8, 6)] = NewChess(COLOR_BLACK, CHESS_BING)
 
-	c[NewPoint(2, 7)] = NewChess(CHESS_PAO, COLOR_BLACK)
-	c[NewPoint(8, 7)] = NewChess(CHESS_PAO, COLOR_BLACK)
+	c[NewPoint(2, 7)] = NewChess(COLOR_BLACK, CHESS_PAO)
+	c[NewPoint(8, 7)] = NewChess(COLOR_BLACK, CHESS_PAO)
 
-	c[NewPoint(0, 9)] = NewChess(CHESS_JU, COLOR_BLACK)
-	c[NewPoint(1, 9)] = NewChess(CHESS_MA, COLOR_BLACK)
-	c[NewPoint(2, 9)] = NewChess(CHESS_XIANG, COLOR_BLACK)
-	c[NewPoint(3, 9)] = NewChess(CHESS_SHI, COLOR_BLACK)
-	c[NewPoint(4, 9)] = NewChess(CHESS_SHUAI, COLOR_BLACK)
-	c[NewPoint(5, 9)] = NewChess(CHESS_SHI, COLOR_BLACK)
-	c[NewPoint(6, 9)] = NewChess(CHESS_XIANG, COLOR_BLACK)
-	c[NewPoint(7, 9)] = NewChess(CHESS_MA, COLOR_BLACK)
-	c[NewPoint(8, 9)] = NewChess(CHESS_JU, COLOR_BLACK)
+	c[NewPoint(0, 9)] = NewChess(COLOR_BLACK, CHESS_JU)
+	c[NewPoint(1, 9)] = NewChess(COLOR_BLACK, CHESS_MA)
+	c[NewPoint(2, 9)] = NewChess(COLOR_BLACK, CHESS_XIANG)
+	c[NewPoint(3, 9)] = NewChess(COLOR_BLACK, CHESS_SHI)
+	c[NewPoint(4, 9)] = NewChess(COLOR_BLACK, CHESS_SHUAI)
+	c[NewPoint(5, 9)] = NewChess(COLOR_BLACK, CHESS_SHI)
+	c[NewPoint(6, 9)] = NewChess(COLOR_BLACK, CHESS_XIANG)
+	c[NewPoint(7, 9)] = NewChess(COLOR_BLACK, CHESS_MA)
+	c[NewPoint(8, 9)] = NewChess(COLOR_BLACK, CHESS_JU)
 
 }
 
@@ -58,6 +58,7 @@ func (c *chessBoard) getInfo() {
 }
 
 func (c *chessBoard) getChessByPoint(point Point) Chess {
+	log.Println("getChessByPoint << point:(", point.X(), ",", point.Y(), ")")
 	return c[point]
 }
 
@@ -114,12 +115,14 @@ func (c *chessBoard) DoAction(action Action) (ok bool) {
 	// 检查棋子走动是否符合规则
 	ok = c.checkAction(action)
 	if !ok {
+		log.Println("DoAction check action false")
 		return
 	}
 
 	// 检查棋子走动后，是否会被将军
 	ok = c.testMove(action)
 	if !ok {
+		log.Println("DoAction testMove false")
 		return
 	}
 
@@ -139,40 +142,40 @@ func (c *chessBoard) checkAction(action Action) (ok bool) {
 	srcChess := c.getChessByPoint(action.Src)
 	dstChess := c.getChessByPoint(action.Dst)
 
-	ok = c.checkActionSameColor(action, srcChess, dstChess)
-	if !ok {
+	if srcChess.color() == dstChess.color() {
+		log.Println("checkAction is same color")
 		return false
 	}
-
+	log.Println("checkAction type", srcChess.color(), srcChess.cType())
 	switch srcChess.cType() {
 	case CHESS_NONE:
+		log.Println("checkAction chess is none")
 		return false
 	case CHESS_JU:
 		ok = c.checkJuAction(action, srcChess, dstChess)
+		return
 	case CHESS_MA:
 		ok = c.checkMaAction(action, srcChess, dstChess)
+		return
 	case CHESS_XIANG:
 		ok = c.checkXiangAction(action, srcChess, dstChess)
+		return
 	case CHESS_SHI:
 		ok = c.checkShiAction(action, srcChess, dstChess)
+		return
 	case CHESS_SHUAI:
 		ok = c.checkShuaiAction(action, srcChess, dstChess)
+		return
 	case CHESS_PAO:
 		ok = c.checkPaoAction(action, srcChess, dstChess)
+		return
 	case CHESS_BING:
 		ok = c.checkBingAction(action, srcChess, dstChess)
+		return
 	default:
 		return false
 	}
 	return
-}
-
-func (c *chessBoard) checkActionSameColor(action Action, srcChess, dstChess Chess) bool {
-	// 相同颜色的不能互相吃
-	if srcChess.color() == dstChess.color() {
-		return false
-	}
-	return true
 }
 
 func (c *chessBoard) checkJuAction(action Action, srcChess, dstChess Chess) bool {
@@ -182,19 +185,18 @@ func (c *chessBoard) checkJuAction(action Action, srcChess, dstChess Chess) bool
 
 	// 检查路径上是否有碍事的
 
-	if action.Src.Y() != action.Dst.Y() && action.Src.X() != action.Dst.X() {
-		return false
-	}
+	log.Println("checkJuAction", action, srcChess, dstChess)
 
 	if action.Src.Y() == action.Dst.Y() {
 		var tmp int8
-		if action.Src.X()-action.Dst.X() > 0 {
+		if action.Dst.X()-action.Src.X() > 0 {
 			tmp = 1
 		} else {
 			tmp = -1
 		}
 
 		for i := action.Src.X() + tmp; i < action.Dst.X(); i += tmp {
+			log.Print("checkJuAction ", i, action.Src.Y())
 			if !c.getChess(i, action.Src.Y()).isNone() {
 				return false
 			}
@@ -202,18 +204,22 @@ func (c *chessBoard) checkJuAction(action Action, srcChess, dstChess Chess) bool
 		}
 	} else if action.Src.X() == action.Dst.X() {
 		var tmp int8
-		if action.Src.Y()-action.Dst.Y() > 0 {
+		if action.Dst.Y()-action.Src.Y() > 0 {
 			tmp = 1
 		} else {
 			tmp = -1
 		}
 
 		for i := action.Src.Y() + tmp; i < action.Dst.Y(); i += tmp {
+			log.Print("checkJuAction ", action.Src.X(), i)
 			if !c.getChess(action.Src.X(), i).isNone() {
 				return false
 			}
 
 		}
+	} else {
+		log.Println("checkJuAction  not in same line")
+		return false
 	}
 
 	return true
@@ -478,13 +484,14 @@ func (c *chessBoard) getRedShuaiPoint() (shuaiPoint Point) {
 	for x = 3; x <= 5; x++ {
 		for y = 0; y <= 2; y++ {
 			chess := c.getChess(x, y)
+			log.Println("getRedShuaiPoint chess", chess, chess.cType(), chess.color(), NewChess(COLOR_RED, CHESS_SHUAI))
 			if !chess.isNone() && chess.cType() == CHESS_SHUAI {
 				return NewPoint(x, y)
 			}
 		}
 	}
 
-	panic("not found")
+	panic("getRedShuaiPoint not found")
 }
 
 func (c *chessBoard) getBlackShuaiPoint() (shuaiPoint Point) {
