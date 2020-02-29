@@ -27,6 +27,15 @@ func (c Chess) cType() uint8 {
 	return uint8(c) >> 4
 }
 
+func (c Chess) color() uint8 {
+	return (uint8(c) << 4) >> 4
+}
+
+func (c Chess) isNone() bool {
+	return c.color() == COLOR_NONE || c.cType() == CHESS_NONE
+	//return uint8(c) == 0
+}
+
 func (c Chess) cTypeString() string {
 	switch c.cType() {
 	case CHESS_NONE:
@@ -50,10 +59,6 @@ func (c Chess) cTypeString() string {
 		return ""
 	}
 
-}
-
-func (c Chess) color() uint8 {
-	return (uint8(c) << 4) >> 4
 }
 
 func (c Chess) colorString() string {
@@ -83,11 +88,6 @@ func (c Chess) String() string {
 func NewChess(color, cType uint8) (c Chess) {
 	i := (cType << 4) + color
 	return Chess(i)
-}
-
-func (c Chess) isNone() bool {
-	return c.color() == COLOR_NONE || c.cType() == CHESS_NONE
-	//return uint8(c) == 0
 }
 
 func otherColor(color uint8) uint8 {
