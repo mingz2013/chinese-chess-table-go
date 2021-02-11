@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/mingz2013/chinese-chess-table-go/board"
+	"chinese-chess-table-go/board"
 	"log"
 )
 

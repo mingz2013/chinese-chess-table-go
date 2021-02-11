@@ -1,16 +1,10 @@
 # chinese-chess-table-go
+
 chinese chess table go
 
+go mod init chinese-chess go mod tidy go mod vendor
+
 象棋桌子逻辑，不依赖其他模块，只依赖标准库
-
-
-
-
-
-
-
-
-
 
 # chess
 
